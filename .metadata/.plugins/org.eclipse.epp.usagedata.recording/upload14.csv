@@ -1,0 +1,26 @@
+what,kind,bundleId,bundleVersion,description,time
+started,bundle,org.rubypeople.rdt.debug.ui,1.3.2.1254334821,"org.rubypeople.rdt.debug.ui",1287875491180
+started,bundle,com.aptana.rdt.ui,1.3.2.1254332735,"com.aptana.rdt.ui",1287875491249
+started,bundle,org.rubypeople.rdt.debug.core,1.3.2.1254241359,"org.rubypeople.rdt.debug.core",1287875491276
+started,bundle,org.eclipse.eclipsemonkey,2.0.0.1256160806,"org.eclipse.eclipsemonkey",1287875491284
+started,bundle,org.eclipse.eclipsemonkey.lang.javascript,2.0.0.1253913567,"org.eclipse.eclipsemonkey.lang.javascript",1287875491294
+started,bundle,org.eclipse.eclipsemonkey.lang.ruby,1.2.2.1252597864,"org.eclipse.eclipsemonkey.lang.ruby",1287875491296
+opened,editor,com.aptana.radrails.intro,2.0.0.1256853868,"com.aptana.radrails.MyRadRailsEditor",1287875491697
+started,bundle,org.eclipse.ui.console,3.4.0.v20090513,"org.eclipse.ui.console",1287875491731
+started,bundle,org.rubypeople.rdt.ui,1.2.4.1255023174,"org.rubypeople.rdt.ui",1287875491915
+started,bundle,org.eclipse.core.variables,3.2.200.v20090521,"org.eclipse.core.variables",1287875492076
+started,bundle,org.eclipse.eclipsemonkey.doms,2.0.0.1253913567,"org.eclipse.eclipsemonkey.doms",1287875492253
+started,bundle,org.rubypeople.rdt.testunit,1.2.4.1254241359,"org.rubypeople.rdt.testunit",1287875492537
+started,bundle,org.radrails.rails.ui,1.3.1.1254927943,"org.radrails.rails.ui",1287875492598
+started,bundle,org.radrails.db.core,2.0.0.1252597864,"org.radrails.db.core",1287875493580
+deactivated,workbench,org.eclipse.ui.workbench,3.5.1.M20090826-0800a,"",1287875493785
+error,log,,,"Failed to retrieve platform for /System/Library/Frameworks/Ruby.framework/Versions/Current/usr",1287875494039
+error,log,,,"Error logged from Debug Core: ",1287875494081
+error,log,,,"Error logged from Debug Core: ",1287875494082
+activated,workbench,org.eclipse.ui.workbench,3.5.1.M20090826-0800a,"",1287875496244
+closed,workbench,org.eclipse.ui.workbench,3.5.1.M20090826-0800a,"",1287875499452
+stopped,bundle,org.eclipse.jst.ws.axis.creation.ui,1.0.406.v200903031852,"org.eclipse.jst.ws.axis.creation.ui",1287875500094
+stopped,bundle,org.eclipse.jst.ws.axis.consumption.ui,1.0.405.v200901261650,"org.eclipse.jst.ws.axis.consumption.ui",1287875500094
+stopped,bundle,org.eclipse.jst.ws.axis.consumption.core,1.0.306.v200810082309,"org.eclipse.jst.ws.axis.consumption.core",1287875500095
+stopped,bundle,org.eclipse.jst.ws.axis2.creation.ui,1.0.103.v200807162242,"org.eclipse.jst.ws.axis2.creation.ui",1287875500096
+stopped,bundle,org.eclipse.jst.ws.axis2.consumption.ui,1.0.102.v200807232000,"org.eclipse.jst.ws.axis2.consumption.ui",1287875500096

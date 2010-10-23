@@ -1,0 +1,26 @@
+what,kind,bundleId,bundleVersion,description,time
+locale,sysinfo,,,"en_US",1287875480488
+processors,sysinfo,,,"2",1287875480488
+java.runtime.name,sysinfo,,,"Java(TM) SE Runtime Environment",1287875480488
+java.runtime.version,sysinfo,,,"1.6.0_20-b02-279-10M3065",1287875480488
+java.specification.name,sysinfo,,,"Java Platform API Specification",1287875480488
+java.specification.vendor,sysinfo,,,"Sun Microsystems Inc.",1287875480488
+java.specification.version,sysinfo,,,"1.6",1287875480488
+java.vendor,sysinfo,,,"Apple Inc.",1287875480488
+java.version,sysinfo,,,"1.6.0_20",1287875480488
+java.vm.info,sysinfo,,,"mixed mode",1287875480488
+java.vm.name,sysinfo,,,"Java HotSpot(TM) 64-Bit Server VM",1287875480488
+java.vm.specification.name,sysinfo,,,"Java Virtual Machine Specification",1287875480488
+java.vm.specification.vendor,sysinfo,,,"Sun Microsystems Inc.",1287875480488
+java.vm.specification.version,sysinfo,,,"1.0",1287875480488
+java.vm.vendor,sysinfo,,,"Apple Inc.",1287875480488
+java.vm.version,sysinfo,,,"16.3-b01-279",1287875480488
+started,bundle,com.aptana.radrails.intro,2.0.0.1256853868,"com.aptana.radrails.intro",1287875480807
+started,bundle,com.aptana.ide.server.jetty,2.0.0.1256341583,"com.aptana.ide.server.jetty",1287875480860
+started,bundle,com.aptana.ide.editors,2.0.0.1256761519,"com.aptana.ide.editors",1287875481342
+started,bundle,com.aptana.ide.scripting,2.0.0.1253913567,"com.aptana.ide.scripting",1287875481345
+started,bundle,com.aptana.ide.update.ui,2.0.0.1257900571,"com.aptana.ide.update.ui",1287875481395
+started,bundle,org.rubypeople.rdt.core,1.3.2.1255537611,"org.rubypeople.rdt.core",1287875490991
+started,bundle,org.rubypeople.rdt.launching,1.3.0.1254241359,"org.rubypeople.rdt.launching",1287875491044
+started,bundle,com.aptana.rdt,1.3.1.1255023174,"com.aptana.rdt",1287875491045
+started,bundle,org.radrails.rails.core,1.3.1.1255533415,"org.radrails.rails.core",1287875491045

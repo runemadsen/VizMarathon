@@ -1,0 +1,3 @@
+what,kind,bundleId,bundleVersion,description,time
+stopped,bundle,org.eclipse.pde.ui.templates,3.4.100.v20090527,"org.eclipse.pde.ui.templates",1287875500514
+stopped,bundle,org.eclipse.pde.ui,3.5.0.v20090821,"org.eclipse.pde.ui",1287875500540

@@ -1,0 +1,26 @@
+what,kind,bundleId,bundleVersion,description,time
+started,bundle,com.aptana.ide.installer,2.0.0.1255027359,"com.aptana.ide.installer",1287875394745
+started,bundle,com.aptana.ide.intro,2.0.0.1256597898,"com.aptana.ide.intro",1287875394749
+started,bundle,com.aptana.ide.scripting,2.0.0.1253913567,"com.aptana.ide.scripting",1287875394767
+started,bundle,com.aptana.ide.server.jetty,2.0.0.1256341583,"com.aptana.ide.server.jetty",1287875394783
+started,bundle,com.aptana.ide.syncing.core,2.0.1.1257900571,"com.aptana.ide.syncing.core",1287875394783
+started,bundle,com.aptana.ide.syncing.ui,2.0.2.1257900571,"com.aptana.ide.syncing.ui",1287875394784
+started,bundle,com.aptana.ide.update,2.0.0.1256853725,"com.aptana.ide.update",1287875394811
+started,bundle,com.aptana.ide.update.eclipse34,2.0.0.1257900571,"com.aptana.ide.update.eclipse34",1287875394812
+started,bundle,com.aptana.ide.update.eclipse35,2.0.0.1257900571,"com.aptana.ide.update.eclipse35",1287875394812
+started,bundle,com.aptana.ide.update.ui,2.0.0.1257900571,"com.aptana.ide.update.ui",1287875394813
+started,bundle,com.aptana.radrails.intro,2.0.0.1256853868,"com.aptana.radrails.intro",1287875394813
+started,bundle,org.eclipse.eclipsemonkey,2.0.0.1256160806,"org.eclipse.eclipsemonkey",1287875394813
+started,bundle,org.eclipse.eclipsemonkey.lang.javascript,2.0.0.1253913567,"org.eclipse.eclipsemonkey.lang.javascript",1287875394841
+started,bundle,org.eclipse.eclipsemonkey.lang.ruby,1.2.2.1252597864,"org.eclipse.eclipsemonkey.lang.ruby",1287875394841
+os,sysinfo,,,"macosx",1287875394847
+arch,sysinfo,,,"x86_64",1287875394847
+ws,sysinfo,,,"cocoa",1287875394847
+locale,sysinfo,,,"en_US",1287875394847
+processors,sysinfo,,,"2",1287875394847
+java.runtime.name,sysinfo,,,"Java(TM) SE Runtime Environment",1287875394847
+java.runtime.version,sysinfo,,,"1.6.0_20-b02-279-10M3065",1287875394847
+java.specification.name,sysinfo,,,"Java Platform API Specification",1287875394847
+java.specification.vendor,sysinfo,,,"Sun Microsystems Inc.",1287875394847
+java.specification.version,sysinfo,,,"1.6",1287875394847
+java.vendor,sysinfo,,,"Apple Inc.",1287875394847

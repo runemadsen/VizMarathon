@@ -1,0 +1,885 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gems>
+	<gem>
+		<name>hpricot</name>
+		<version>0.8.2</version>
+		<description>a swift, liberal HTML parser with a fantastic library</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>ruby-openid</name>
+		<version>2.1.7</version>
+		<description>A library for consuming and serving OpenID identities.</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>text-hyphen</name>
+		<version>1.0.0</version>
+		<description>Multilingual word hyphenation according to modified TeX hyphenation pattern files.</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>term-ansicolor</name>
+		<version>1.0.5</version>
+		<description>Ruby library that colors strings using ANSI escape sequences</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>rack</name>
+		<version>1.2.1</version>
+		<description>a modular Ruby webserver interface</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>pdf-reader</name>
+		<version>0.8.5</version>
+		<description>A library for accessing the content of PDF files</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>thor</name>
+		<version>0.14.0</version>
+		<description>A scripting framework that replaces rake, sake and rubigen</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>ruby-openid</name>
+		<version>2.1.2</version>
+		<description>A library for consuming and serving OpenID identities.</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>actionwebservice</name>
+		<version>1.2.6</version>
+		<description>Web service support for Action Pack.</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>prawn-core</name>
+		<version>0.8.4</version>
+		<description>A fast and nimble PDF generator for Ruby</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>activesupport</name>
+		<version>1.4.4</version>
+		<description>A toolkit of support libraries and Ruby core extensions extracted from the Rails framework.</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>activeresource</name>
+		<version>2.3.5</version>
+		<description>REST modeling framework (part of Rails).</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>twitter_oauth</name>
+		<version>0.4.2</version>
+		<description>twitter_oauth is a Ruby client for the Twitter API using OAuth.</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>webrat</name>
+		<version>0.7.1</version>
+		<description>Ruby Acceptance Testing for Web applications</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>memcache-client</name>
+		<version>1.8.5</version>
+		<description>A Ruby library for accessing memcached.</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>activesupport</name>
+		<version>3.0.0</version>
+		<description>A toolkit of support libraries and Ruby core extensions extracted from the Rails framework.</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>ferret</name>
+		<version>0.11.6</version>
+		<description>Ruby indexing library.</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>mail</name>
+		<version>2.2.6.1</version>
+		<description>Mail provides a nice Ruby DSL for making, sending and reading emails.</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>net-ssh</name>
+		<version>2.0.4</version>
+		<description>Net::SSH: a pure-Ruby implementation of the SSH2 client protocol.</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>net-sftp</name>
+		<version>2.0.1</version>
+		<description>A pure Ruby implementation of the SFTP client protocol</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>rspec</name>
+		<version>2.0.0.rc</version>
+		<description>rspec-2.0.0</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>actionpack</name>
+		<version>3.0.0</version>
+		<description>Web-flow and rendering framework putting the VC in MVC (part of Rails).</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>net-sftp</name>
+		<version>2.0.4</version>
+		<description>A pure Ruby implementation of the SFTP client protocol</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>polyglot</name>
+		<version>0.3.1</version>
+		<description>Allows custom language loaders for specified file extensions to be hooked into require</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>termios</name>
+		<version>0.9.4</version>
+		<description>Termios module are simple wrapper for termios(3). It can be included into IO-family classes and can extend IO-family objects. In addition, the methods can use as module function.</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>rack-test</name>
+		<version>0.5.4</version>
+		<description>Simple testing API built on Rack</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>rspec-core</name>
+		<version>2.0.0.rc</version>
+		<description>rspec-core-2.0.0</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>rack-test</name>
+		<version>0.5.6</version>
+		<description>Simple testing API built on Rack</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>rspec-rails</name>
+		<version>2.0.0.rc</version>
+		<description>rspec-rails-2.0.1</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>trollop</name>
+		<version>1.16.2</version>
+		<description>Trollop is a commandline option parser for Ruby that just gets out of your way.</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>thor</name>
+		<version>0.14.2</version>
+		<description>A scripting framework that replaces rake, sake and rubigen</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>mail</name>
+		<version>2.2.5</version>
+		<description>Mail provides a nice Ruby DSL for making, sending and reading emails.</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>nokogiri</name>
+		<version>1.4.2</version>
+		<description>Nokogiri (Èã∏) is an HTML, XML, SAX, and Reader parser</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>text-format</name>
+		<version>1.0.0</version>
+		<description>Text::Format formats fixed-width text nicely.</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>activerecord</name>
+		<version>1.15.6</version>
+		<description>Object-relational mapper framework (part of Rails).</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>thor</name>
+		<version>0.13.8</version>
+		<description>A scripting framework that replaces rake, sake and rubigen</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>rspec-core</name>
+		<version>2.0.0</version>
+		<description>rspec-core-2.0.0</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>rack-mount</name>
+		<version>0.6.9</version>
+		<description>Stackable dynamic tree based Rack router</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>activerecord</name>
+		<version>3.0.0</version>
+		<description>Object-relational mapper framework (part of Rails).</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>libxml-ruby</name>
+		<version>1.1.2</version>
+		<description>Ruby libxml bindings</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>libxml-ruby</name>
+		<version>1.1.4</version>
+		<description>Ruby libxml bindings</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>RedCloth</name>
+		<version>4.1.1</version>
+		<description>RedCloth-4.2.3 - Textile parser for Ruby. http://redcloth.org/</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>arel</name>
+		<version>0.4.0</version>
+		<description>Arel is a relational algebra engine for Ruby</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>actionpack</name>
+		<version>2.3.8</version>
+		<description>Web-flow and rendering framework putting the VC in MVC (part of Rails).</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>rack-mount</name>
+		<version>0.6.13</version>
+		<description>Stackable dynamic tree based Rack router</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>daemons</name>
+		<version>1.0.10</version>
+		<description>A toolkit to create and control daemons in different ways</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>actionpack</name>
+		<version>2.3.5</version>
+		<description>Web-flow and rendering framework putting the VC in MVC (part of Rails).</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>rspec-expectations</name>
+		<version>2.0.0.rc</version>
+		<description>rspec-expectations-2.0.0</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>ruby-yadis</name>
+		<version>0.3.4</version>
+		<description>A library for performing Yadis service discovery</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>activerecord</name>
+		<version>2.2.2</version>
+		<description>Object-relational mapper framework (part of Rails).</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>highline</name>
+		<version>1.5.0</version>
+		<description>HighLine is a high-level command-line IO library.</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>fastercsv</name>
+		<version>1.5.3</version>
+		<description>FasterCSV is CSV, but faster, smaller, and cleaner.</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>bundler</name>
+		<version>1.0.0</version>
+		<description>The best way to manage your application&apos;s dependencies</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>bind</name>
+		<version>0.2.8</version>
+		<description>bind actions to filesystem events</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>oauth</name>
+		<version>0.4.1</version>
+		<description>OAuth Core Ruby implementation</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>rails</name>
+		<version>2.2.2</version>
+		<description>Full-stack web application framework.</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>sqlite3-ruby</name>
+		<version>1.2.1</version>
+		<description>This module allows Ruby programs to interface with the SQLite3 database engine (http://www.sqlite.org)</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>sqlite3-ruby</name>
+		<version>1.2.4</version>
+		<description>This module allows Ruby programs to interface with the SQLite3 database engine (http://www.sqlite.org)</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>gem_plugin</name>
+		<version>0.2.3</version>
+		<description>A plugin system based on rubygems that uses dependencies only</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>fcgi</name>
+		<version>0.8.8</version>
+		<description>FastCGI library for Ruby.</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>jspec</name>
+		<version>4.3.2</version>
+		<description>JavaScript BDD Testing Framework</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>net-ssh</name>
+		<version>2.0.23</version>
+		<description>Net::SSH: a pure-Ruby implementation of the SSH2 client protocol.</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>actionpack</name>
+		<version>2.2.2</version>
+		<description>Web-flow and rendering framework putting the VC in MVC (part of Rails).</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>activeresource</name>
+		<version>2.2.2</version>
+		<description>REST modeling framework (part of Rails).</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>rspec-mocks</name>
+		<version>2.0.0.rc</version>
+		<description>rspec-mocks-2.0.0</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>rspec-expectations</name>
+		<version>2.0.0</version>
+		<description>rspec-expectations-2.0.0</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>fcgi</name>
+		<version>0.8.7</version>
+		<description>FastCGI library for Ruby.</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>rails</name>
+		<version>3.0.0</version>
+		<description>Full-stack web application framework.</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>activerecord</name>
+		<version>2.3.5</version>
+		<description>Object-relational mapper framework (part of Rails).</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>gherkin</name>
+		<version>2.1.5</version>
+		<description>Fast Gherkin lexer/parser</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>prawn-layout</name>
+		<version>0.8.4</version>
+		<description>An extension to Prawn that provides table support and other layout functionality</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>actionmailer</name>
+		<version>2.2.2</version>
+		<description>Email composition, delivery, and receiving framework (part of Rails).</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>abstract</name>
+		<version>1.0.0</version>
+		<description>a library which enable you to define abstract method in Ruby</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>dnssd</name>
+		<version>0.6.0</version>
+		<description>DNS Service Discovery (aka Bonjour, MDNS) API for Ruby</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>arel</name>
+		<version>1.0.1</version>
+		<description>Arel is a relational algebra engine for Ruby</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>mongrel</name>
+		<version>1.1.5</version>
+		<description>A small fast HTTP library and server that runs Rails, Camping, Nitro and Iowa apps.</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>rack</name>
+		<version>1.0.1</version>
+		<description>a modular Ruby webserver interface</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>activeresource</name>
+		<version>3.0.0</version>
+		<description>REST modeling framework (part of Rails).</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>activesupport</name>
+		<version>2.3.5</version>
+		<description>A toolkit of support libraries and Ruby core extensions extracted from the Rails framework.</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>activesupport</name>
+		<version>2.2.2</version>
+		<description>A toolkit of support libraries and Ruby core extensions extracted from the Rails framework.</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>i18n</name>
+		<version>0.4.1</version>
+		<description>New wave Internationalization support for Ruby</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>actionmailer</name>
+		<version>3.0.0</version>
+		<description>Email composition, delivery, and receiving framework (part of Rails).</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>twitter4r</name>
+		<version>0.3.2</version>
+		<description>A clean Twitter client API in pure Ruby. Will include Twitter add-ons also in Ruby.</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>railties</name>
+		<version>3.0.0</version>
+		<description>Tools for creating, working with, and running Rails applications.</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>actionmailer</name>
+		<version>2.3.8</version>
+		<description>Email composition, delivery, and receiving framework (part of Rails).</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>acts_as_ferret</name>
+		<version>0.4.8</version>
+		<description>acts_as_ferret - Ferret based full text search for any ActiveRecord model</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>actionpack</name>
+		<version>1.13.6</version>
+		<description>Web-flow and rendering framework putting the VC in MVC (part of Rails).</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>net-scp</name>
+		<version>1.0.2</version>
+		<description>A pure Ruby implementation of the SCP client protocol</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>treetop</name>
+		<version>1.4.8</version>
+		<description>A Ruby-based text parsing and interpretation DSL</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>net-scp</name>
+		<version>1.0.1</version>
+		<description>A pure Ruby implementation of the SCP client protocol</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>RedCloth</name>
+		<version>4.2.3</version>
+		<description>RedCloth-4.2.3 - Textile parser for Ruby. http://redcloth.org/</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>mysql</name>
+		<version>2.8.1</version>
+		<description>This is the MySQL API module for Ruby</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>rubygems-update</name>
+		<version>1.3.7</version>
+		<description>RubyGems is a package management framework for Ruby</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>actionmailer</name>
+		<version>2.3.5</version>
+		<description>Email composition, delivery, and receiving framework (part of Rails).</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>rubynode</name>
+		<version>0.1.5</version>
+		<description>RubyNode is a library that allows read only access to Ruby&apos;s internal NODE structure.</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>capistrano</name>
+		<version>2.5.2</version>
+		<description>Capistrano ‚Äì Welcome to easy deployment with Ruby over SSH</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>railties</name>
+		<version>3.0.0.beta3</version>
+		<description>Tools for creating, working with, and running Rails applications.</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>json_pure</name>
+		<version>1.4.3</version>
+		<description>JSON Implementation for Ruby</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>hpricot</name>
+		<version>0.6.164</version>
+		<description>a swift, liberal HTML parser with a fantastic library</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>json</name>
+		<version>1.4.6</version>
+		<description>JSON Implementation for Ruby</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>sinatra</name>
+		<version>1.0</version>
+		<description>Classy web-development dressed in a DSL</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>acts_as_ferret</name>
+		<version>0.4.3</version>
+		<description>acts_as_ferret - Ferret based full text search for any ActiveRecord model</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>activemodel</name>
+		<version>3.0.0</version>
+		<description>A toolkit for building modeling frameworks (part of Rails).</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>json</name>
+		<version>1.4.3</version>
+		<description>JSON Implementation for Ruby</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>net-ssh</name>
+		<version>1.1.4</version>
+		<description>Net::SSH: a pure-Ruby implementation of the SSH2 client protocol.</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>net-ssh-gateway</name>
+		<version>1.0.0</version>
+		<description>A simple library to assist in establishing tunneled Net::SSH connections</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>rspec-mocks</name>
+		<version>2.0.0</version>
+		<description>rspec-mocks-2.0.0</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>fastthread</name>
+		<version>1.0.7</version>
+		<description>Optimized replacement for thread.rb primitives</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>net-ssh-gateway</name>
+		<version>1.0.1</version>
+		<description>A simple library to assist in establishing tunneled Net::SSH connections</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>cucumber</name>
+		<version>0.8.5</version>
+		<description>Behaviour Driven Development with elegance and joy</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>ruby-processing</name>
+		<version>1.0.9</version>
+		<description>Code as Art, Art as Code. Processing and Ruby are meant for each other.</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>diff-lcs</name>
+		<version>1.1.2</version>
+		<description>Provides a list of changes that represent the difference between two sequenced collections.</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>highline</name>
+		<version>1.6.1</version>
+		<description>HighLine is a high-level command-line IO library.</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>mime-types</name>
+		<version>1.16</version>
+		<description>Manages a MIME Content-Type database that will return the Content-Type for a given filename.</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>xmpp4r</name>
+		<version>0.4</version>
+		<description>XMPP4R is an XMPP/Jabber library for Ruby.</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>xmpp4r</name>
+		<version>0.5</version>
+		<description>XMPP4R is an XMPP/Jabber library for Ruby.</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>fastthread</name>
+		<version>1.0.1</version>
+		<description>Optimized replacement for thread.rb primitives</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>rails</name>
+		<version>1.2.6</version>
+		<description>Full-stack web application framework.</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>sqlite3-ruby</name>
+		<version>1.3.1</version>
+		<description>This module allows Ruby programs to interface with the SQLite3 database engine (http://www.sqlite.org)</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>bundler</name>
+		<version>0.9.26</version>
+		<description>The best way to manage your application&apos;s dependencies</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>validatable</name>
+		<version>1.6.7</version>
+		<description>Validatable is a library for adding validations.</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>prawn-security</name>
+		<version>0.8.4</version>
+		<description>Popular Password Protection &amp; Permissions for Prawn PDFs</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>rspec</name>
+		<version>2.0.0</version>
+		<description>rspec-2.0.0</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>rake</name>
+		<version>0.8.3</version>
+		<description>Ruby based make-like utility.</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>builder</name>
+		<version>2.1.2</version>
+		<description>Builders for MarkUp.</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>tzinfo</name>
+		<version>0.3.22</version>
+		<description>Daylight-savings aware timezone library</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>erubis</name>
+		<version>2.6.6</version>
+		<description>a fast and extensible eRuby implementation which supports multi-language</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>tzinfo</name>
+		<version>0.3.23</version>
+		<description>Daylight-savings aware timezone library</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>rake</name>
+		<version>0.8.7</version>
+		<description>Ruby based make-like utility.</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>prawn</name>
+		<version>0.8.4</version>
+		<description>A fast and nimble PDF generator for Ruby</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>dnssd</name>
+		<version>1.3.1</version>
+		<description>DNS Service Discovery (aka Bonjour, MDNS) API for Ruby</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>daemons</name>
+		<version>1.1.0</version>
+		<description>A toolkit to create and control daemons in different ways</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>couchrest_model</name>
+		<version>1.0.0.beta8</version>
+		<description>Extends the CouchRest Document for advanced modelling.</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>Ascii85</name>
+		<version>1.0.0</version>
+		<description>Ascii85 is a simple gem that provides methods for encoding/decoding Adobe&apos;s binary-to-text encoding of the same name</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>rails</name>
+		<version>2.3.5</version>
+		<description>Full-stack web application framework.</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>couchrest</name>
+		<version>1.0.1</version>
+		<description>Lean and RESTful interface to CouchDB.</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>needle</name>
+		<version>1.3.0</version>
+		<description>Needle is a Dependency Injection/Inversion of Control container for Ruby. It supports both type-2 (setter) and type-3 (constructor) injection. It takes advantage of the dynamic nature of Ruby to provide a rich and flexible approach to injecting dependencies.</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>rspec-rails</name>
+		<version>2.0.1</version>
+		<description>rspec-rails-2.0.1</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>couchrest</name>
+		<version>0.34</version>
+		<description>Lean and RESTful interface to CouchDB.</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>net-sftp</name>
+		<version>1.1.1</version>
+		<description>A pure Ruby implementation of the SFTP client protocol</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>rest-client</name>
+		<version>1.6.0</version>
+		<description>Simple REST client for Ruby, inspired by microframework syntax for specifying actions.</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>rest-client</name>
+		<version>1.6.1</version>
+		<description>Simple REST client for Ruby, inspired by microframework syntax for specifying actions.</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>cucumber-rails</name>
+		<version>0.3.2</version>
+		<description>Cucumber Generators and Runtime for Rails</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>actionmailer</name>
+		<version>1.3.6</version>
+		<description>Email composition, delivery, and receiving framework (part of Rails).</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>commander</name>
+		<version>4.0.3</version>
+		<description>The complete solution for Ruby command-line executables</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>cgi_multipart_eof_fix</name>
+		<version>2.5.0</version>
+		<description>Fix an exploitable bug in CGI multipart parsing.</description>
+		<platform>ruby</platform>
+	</gem>
+	<gem>
+		<name>capistrano</name>
+		<version>2.5.19</version>
+		<description>Capistrano ‚Äì Welcome to easy deployment with Ruby over SSH</description>
+		<platform>ruby</platform>
+	</gem>
+</gems>

@@ -1,0 +1,26 @@
+what,kind,bundleId,bundleVersion,description,time
+error,log,,,"Failed to retrieve platform for /System/Library/Frameworks/Ruby.framework/Versions/Current/usr",1287875401703
+error,log,,,"Error logged from Debug Core: ",1287875401704
+error,log,,,"Error logged from Debug Core: ",1287875401705
+started,bundle,org.rubypeople.rdt.testunit,1.2.4.1254241359,"org.rubypeople.rdt.testunit",1287875401933
+started,bundle,org.radrails.rails.ui,1.3.1.1254927943,"org.radrails.rails.ui",1287875401940
+started,bundle,org.radrails.db.core,2.0.0.1252597864,"org.radrails.db.core",1287875403028
+error,log,,,"Host is down",1287875407030
+activated,workbench,org.eclipse.ui.workbench,3.5.1.M20090826-0800a,"",1287875409690
+deactivated,workbench,org.eclipse.ui.workbench,3.5.1.M20090826-0800a,"",1287875412355
+activated,workbench,org.eclipse.ui.workbench,3.5.1.M20090826-0800a,"",1287875414094
+deactivated,workbench,org.eclipse.ui.workbench,3.5.1.M20090826-0800a,"",1287875423034
+activated,workbench,org.eclipse.ui.workbench,3.5.1.M20090826-0800a,"",1287875463348
+executed,command,org.eclipse.ui,3.5.1.M20090902-1000,"org.eclipse.ui.newWizard",1287875463378
+closed,workbench,org.eclipse.ui.workbench,3.5.1.M20090826-0800a,"",1287875464198
+started,bundle,com.aptana.ide.core.epl,2.0.0.1257900571,"com.aptana.ide.core.epl",1287875464371
+stopped,bundle,org.eclipse.jst.ws.axis.creation.ui,1.0.406.v200903031852,"org.eclipse.jst.ws.axis.creation.ui",1287875464848
+stopped,bundle,org.eclipse.jst.ws.axis.consumption.ui,1.0.405.v200901261650,"org.eclipse.jst.ws.axis.consumption.ui",1287875464865
+stopped,bundle,org.eclipse.jst.ws.axis.consumption.core,1.0.306.v200810082309,"org.eclipse.jst.ws.axis.consumption.core",1287875464867
+stopped,bundle,org.eclipse.jst.ws.axis2.creation.ui,1.0.103.v200807162242,"org.eclipse.jst.ws.axis2.creation.ui",1287875464871
+stopped,bundle,org.eclipse.jst.ws.axis2.consumption.ui,1.0.102.v200807232000,"org.eclipse.jst.ws.axis2.consumption.ui",1287875464872
+stopped,bundle,org.eclipse.jst.ws.axis2.creation.core,1.0.105.v200901220134,"org.eclipse.jst.ws.axis2.creation.core",1287875464873
+stopped,bundle,org.eclipse.jst.ws.axis2.consumption.core,1.0.104.v200810151442,"org.eclipse.jst.ws.axis2.consumption.core",1287875464874
+stopped,bundle,org.eclipse.jst.ws.axis2.ui,1.0.302.v200905260749,"org.eclipse.jst.ws.axis2.ui",1287875464874
+stopped,bundle,org.eclipse.jst.ws.axis2.core,1.0.104.v200810151442,"org.eclipse.jst.ws.axis2.core",1287875464875
+stopped,bundle,org.eclipse.jst.ws.creation.ui,1.0.408.v200904211646,"org.eclipse.jst.ws.creation.ui",1287875464892
