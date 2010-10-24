@@ -1,0 +1,112 @@
+2010-03-14  Karsten Schmidt  <k@postspectacular.com>
+
+	* examples/core/MeshAlignToAxis/MeshAlignToAxis.pde,
+	examples/core/MeshDoodle/MeshDoodle.pde,
+	examples/core/STLImportTest/STLImportTest.pde, examples/core/SuperEl
+	lipsoidMeshBuilder/SuperEllipsoidMeshBuilder.pde,
+	examples/physics/BoxFluidDemo/BoxFluidDemo.pde,
+	examples/volume/BoxFluidDemo/BoxFluidDemo.pde,
+	examples/volume/MRISurface/MRISurface.pde,
+	examples/volume/NoiseSurface/NoiseSurface.pde,
+	src.core/toxi/geom/AABB.java,
+	src.core/toxi/geom/AxisAlignedCylinder.java,
+	src.core/toxi/geom/Cone.java, src.core/toxi/geom/Plane.java,
+	src.core/toxi/geom/XAxisCylinder.java,
+	src.core/toxi/geom/YAxisCylinder.java,
+	src.core/toxi/geom/ZAxisCylinder.java,
+	src.core/toxi/geom/mesh/DefaultSTLColorModel.java,
+	src.core/toxi/geom/mesh/MaterialiseSTLColorModel.java,
+	src.core/toxi/geom/mesh/OBJWriter.java,
+	src.core/toxi/geom/mesh/STLColorModel.java,
+	src.core/toxi/geom/mesh/STLReader.java,
+	src.core/toxi/geom/mesh/STLWriter.java,
+	src.core/toxi/geom/mesh/SphericalHarmonics.java,
+	src.core/toxi/geom/mesh/SuperEllipsoid.java,
+	src.core/toxi/geom/mesh/SurfaceFunction.java,
+	src.core/toxi/geom/mesh/SurfaceMeshBuilder.java,
+	src.core/toxi/geom/mesh/TriangleMesh.java,
+	src.core/toxi/geom/util/DefaultSTLColorModel.java,
+	src.core/toxi/geom/util/MaterialiseSTLColorModel.java,
+	src.core/toxi/geom/util/OBJWriter.java,
+	src.core/toxi/geom/util/STLColorModel.java,
+	src.core/toxi/geom/util/STLReader.java,
+	src.core/toxi/geom/util/STLWriter.java,
+	src.core/toxi/geom/util/SphericalHarmonics.java,
+	src.core/toxi/geom/util/SuperEllipsoid.java,
+	src.core/toxi/geom/util/SurfaceFunction.java,
+	src.core/toxi/geom/util/SurfaceMeshBuilder.java,
+	src.core/toxi/geom/util/TriangleMesh.java,
+	src.core/toxi/math/MathUtils.java,
+	src.test/toxi/test/geom/TriangleMeshTest.java,
+	src.volume/toxi/volume/IsoSurface.java:
+	renamed package toxi.geom.util into toxi.geom.mesh, added
+	getDefaultRGB() to STLColorModel, refactored
+	TriangleMesh.saveAsSTL() and fixed vertex order in saveAsOBJ(),
+	added DEFAULT_RGB constant to STLWriter, added enableFacetColor flag
+	to MaterialiseSTLColorModel, updated new package references in
+	related classes & examples @twitter
+	[c16a57bd455f] <toxiclibs>
+
+2010-03-01  Karsten Schmidt  <k@postspectacular.com>
+
+	* src.volume/toxi/volume/IsoSurface.java:
+	fixing vertex order when adding faces to mesh in
+	computeSurfaceMesh() (fixes normals now correctly outward facing)
+	[313e6fe5baf5] <toxiclibs>
+
+2010-02-16  Karsten Schmidt  <k@postspectacular.com>
+
+	* src.volume/toxi/volume/IsoSurface.java:
+	fixing issue #11 and refactoring computeSurfaceMesh()
+	[1fe22b7693c4] <toxiclibs>
+
+2009-11-23  Karsten Schmidt  <k@postspectacular.com>
+
+	* src.volume/toxi/volume/IsoSurface.java:
+	changing vertex ordering in computeSurfaceMesh() in order to fix
+	normals
+	[46627d4e7e72] <toxiclibs>
+
+2009-10-15  Karsten Schmidt  <k@postspectacular.com>
+
+	* examples/volume/BoxFluidDemo/BoxFluidDemo.pde,
+	examples/volume/BoxFluidDemo/GUI.pde,
+	examples/volume/BoxFluidDemo/Mesh.pde,
+	examples/volume/BoxFluidDemo/Physics.pde,
+	readme1st/volume/CHANGELOG.txt,
+	src.volume/toxi/volume/BoxBrush.java,
+	src.volume/toxi/volume/IsoSurface.java,
+	src.volume/toxi/volume/RoundBrush.java,
+	src.volume/toxi/volume/VolumetricSpace.java:
+	updating volumeutils classes with changes done during nokia project
+	(see changelog), adding BoxFluidDemo example for Processing and
+	updated changelog
+	[adedc009d67f] <toxiclibs>
+
+2009-07-22  Karsten Schmidt  <k@postspectacular.com>
+
+	* src.volume/toxi/volume/IsoSurface.java,
+	src.volume/toxi/volume/MarchingCubesIndex.java:
+	optimizations to inner loops in computeSurface() and getCellIndex()
+	[409aaafd9fb2] <toxiclibs>
+
+2009-06-29  Karsten Schmidt  <k@postspectacular.com>
+
+	* ant/build_volume.xml, src.volume/toxi/volume/IsoSurface.java:
+	updating version number in volume build.xml and adding alternative
+	IsoSurface.computeSurfaceMesh() method utilizing new TriangleMesh
+	class
+	[6f41c7f3acc7] <toxiclibs>
+
+2009-02-27  Karsten Schmidt  <k@postspectacular.com>
+
+	* src.volume/toxi/volume/BoxBrush.java,
+	src.volume/toxi/volume/IsoSurface.java,
+	src.volume/toxi/volume/MarchingCubesIndex.java,
+	src.volume/toxi/volume/RoundBrush.java,
+	src.volume/toxi/volume/VolumetricBrush.java,
+	src.volume/toxi/volume/VolumetricSpace.java:
+	moving volume classes out from core libs and into separate package
+	toxi.volume which will also become its own subrelease
+	[9b2a86a532cf] <toxiclibs>
+
