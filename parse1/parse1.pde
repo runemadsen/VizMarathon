@@ -113,16 +113,16 @@ void displayAtmos(float r)
   fill(color(40));
   noStroke();
   
-  text(ppm.data[min(ppmind, 29)] + " parts per million CO2 concentration", cos(PI/3) * 1.3 *(r + ppm.data[min(ppmind, 29)]/4.0f), - sin(PI/3) * 1.3 * (r + ppm.data[min(ppmind, 29)]/4.0f));
+  text(ppm.data[min(ppmind, 29)] + " parts per million CO2 \n atmospheric concentration", cos(PI/3) * 1.3 *(r + ppm.data[min(ppmind, 29)]/4.0f), - sin(PI/3) * 1.3 * (r + ppm.data[min(ppmind, 29)]/4.0f));
   
   noFill();
   stroke(color(255, 20, 20));
   ellipse(0, 0, 2*r + 350.0f/2.0f, 2*r + 350.0f/2.0f);
-  line(cos(PI/3.5f) * (r + 350.0f/4.0f),  - sin(PI/3.5f) * (r + 350.0f/4.0f), cos(PI/3.5f) * 1.3 *(r + 350.0f/4.0f), - sin(PI/3.5f) * 1.3 * (r + 350.0f/4.0f));
+  line(cos(PI/4.0f) * (r + 350.0f/4.0f),  - sin(PI/4.0f) * (r + 350.0f/4.0f), cos(PI/4.0f) * 1.3 *(r + 350.0f/4.0f), - sin(PI/4.0f) * 1.3 * (r + 350.0f/4.0f));
   fill(color(40));
   noStroke();
   
-  text(350.0f + " boundary CO2 parts per million.", cos(PI/3.5f) * 1.3 *(r + 350.0f/4.0f), - sin(PI/3.5f) * 1.3 * (r + 350.0f/4.0f));
+  text(350.0f + " threshold of irreversible \n climate change", cos(PI/4.0f) * 1.3 *(r + 350.0f/4.0f), - sin(PI/4.0f) * 1.3 * (r + 350.0f/4.0f));
 }
 
 class gmslModule
@@ -176,19 +176,39 @@ class gmslModule
   stroke(#3a69a5);
   strokeWeight(2);
   
-  fill(#c7d4e3);
+  fill(#99b5d8);
   float d = 2*r + 2*gmsl[min(curYearIndex, 50)]/4;
  // ellipse(width/2, height/2, d, d);
   for(int i = 0; i < 12; i++)
   {
+    stroke(#3a69a5);
+    strokeWeight(2);
+     fill(#99b5d8);
      float val = 2.5*r + 2*gmsl_raw[min(curYearIndex, 50)*12+i]/4;
      //fill(color(180, 180, i*10+50));
      arc(0, 0, val * 2 - 200, val * 2 - 200, i * 2*PI/12 - PI/2 + .01, (i+1) * 2*PI/12 - PI/2 - .01);
+     
+     pushMatrix();
+     rotate((i-2) * PI/6.0f - PI/12.0f);
+     translate(155, 0);
+     rotate(PI/2);
+     translate(-19,0);
+     
+     noStroke();
+     fill(#111111);
+     text(gmsl_raw[min(curYearIndex, 50)*12+i], 0,0);//cos(i * (PI/6) - PI/2 + PI/4) * 2 * r - 20, -sin(i * (PI/6) - PI/2 + PI/4) * 2 *r);
+     popMatrix();
   }
   
-    fill(color(40));
+    fill(#3a69a5);
     noStroke();
-    text(gmsl[min(curYearIndex, 50)] + " mm global annual average sea level", r+50, 20);
+    textFont(helvetica, 16);
+    text("Global mean sea level in mm", r-210, r + 200);
+    
+    fill(#e18c1c);
+    noStroke();
+    textFont(helvetica, 16);
+    text("Global average temperature", r-210, r + 220);
  }
 }
 
@@ -346,7 +366,7 @@ void draw()
 
  
   // ROADS
-  pushMatrix();
+  /*pushMatrix();
   if(active.equals("roads") && animationCounter == .0f)
   {
     translate(width/2, height/2);
@@ -370,9 +390,15 @@ void draw()
   }
   roadSys.setYear(sliderVal);
   roadSys.display();
+  popMatrix();*/
+  
+  pushMatrix();
+  translate(width - 500, height/2);
+  roadSys.setYear(sliderVal);
+  roadSys.display();
   popMatrix();
   
-  
+  /*
   pushMatrix();
   
   // active
@@ -424,7 +450,7 @@ void draw()
   }
   popMatrix();
   
-  popMatrix();
+  popMatrix();*/
   
   
    // GMSL  
@@ -432,7 +458,7 @@ void draw()
   pushMatrix();
   
   
- if(active.equals("seatemp") && animationCounter == .0f)
+ /*if(active.equals("seatemp") && animationCounter == .0f)
  {
     translate(width/2, height/2);
   } 
@@ -452,7 +478,9 @@ void draw()
       PVector v = PVector.add(cent, (PVector.mult(PVector.sub(seatemp, cent), animationCounter/float(ANIMAX))));
      translate( v.x, v.y );
      scale( map(animationCounter, 0, ANIMAX, 1.0f, 0.45f));
-  }
+  }*/
+  
+  translate(340, height/2);
   
  
  // scale(1.5f);
@@ -479,7 +507,7 @@ void draw()
  
   colorMode(RGB, 255);
   
-  textFont(helvetica, 10);
+  textFont(helvetica, 15);
   
   pushMatrix();
   pushMatrix();

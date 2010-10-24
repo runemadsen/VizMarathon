@@ -9,7 +9,7 @@ class TimeBar
   
   TimeBar()
   {
-    font = createFont("Helvetica-Bold-48.vlw", 25);
+    font = createFont("Helvetica-Bold-48.vlw", 20);
     textFont(font);
   }
   

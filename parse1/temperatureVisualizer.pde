@@ -1,6 +1,3 @@
-import toxi.geom.*;
-import toxi.math.*;
-
 public class TemperatureVisualizer extends AbstractVisualizer
 {
   private HashMap data = new HashMap();
@@ -41,32 +38,40 @@ public class TemperatureVisualizer extends AbstractVisualizer
     ellipseMode(CENTER);
     colorMode(HSB);
     noStroke();
-    
+
     float[] thisYear = (float[])data.get(curYear);
     float d = 170, d2 = 240;
+   
+    textFont(silk8);
 
     for(int i = 0; i < 12; i++)
     {
       //println(i + ": " + thisYear[i]);
       if (thisYear[i] == 0.0) continue;
       float val = d + thisYear[i];
-      
-      //colorMode(HSB);
-      colorMode(RGB);
-      fill(#f5a133);
-      arc(0, 0, d*1.3f, d*1.3f, i * 2*PI/12 - PI/2, (i+1) * 2*PI/12 - PI/2);
-     // noStroke();
-       //colorMode(RGB);
-      stroke(#e18c1c);
-      
-      strokeWeight(2);
+      fill(20, 255, 255);
+      arc(0, 0, d, d, i * 2*PI/12 - PI/2, (i+1) * 2*PI/12 - PI/2);
       fill(255);
-      arc(0, 0, d2*1.3f-val/2, d2*1.3f-val/2, i * 2*PI/12 - PI/2, (i+1) * 2*PI/12 - PI/2);
+      arc(0, 0, d2-val/2, d2-val/2, i * 2*PI/12 - PI/2 - radians(2), (i+1) * 2*PI/12 - PI/2 + radians(2));
+
+
+      pushMatrix();
+      scale(.95f);
+      rotate((i-2) * PI/6.0f - PI/12.0f);
+      translate(80, 0);
+      rotate(PI/2);
+      translate(-15,0);
+
+      //  translate(50, 0);
+
+      fill(color(0));
+      float temp = 57.2+1.8*(thisYear[i]-80)/100;
+      text(nf(temp, 0, 2), 0, 0);
+      popMatrix();
     }
-    
-    noStroke();
+
     fill(255);
-    ellipse(0, 0, 7.5, 7.5);
+    ellipse(0, 0, 5, 5);
   }
 
   public String getTitle() {
@@ -77,4 +82,3 @@ public class TemperatureVisualizer extends AbstractVisualizer
     return false;
   }
 }
-
