@@ -126,6 +126,7 @@ void setup()
   smooth();
   
   silk8 = loadFont("Silkscreen-8.vlw"); 
+  textFont(silk8);
   
   gm = new gmslModule();
   co2 = new co2RegModule();
@@ -234,7 +235,7 @@ void draw()
   
 
   
-  textFont(silk8);
+ 
   
   float co2sum = .0f;
   
@@ -260,9 +261,9 @@ void draw()
   co2sum /= total[curYearIndex];
   co2sum *= 10000000; // in million tons, so scale by 1 million ---> 10 million to get better visual scale
   pushMatrix();
-  translate(width/2, height/2 - 2*r);
+  translate(width/2, 100);
   fill(color(200, 200, 50));
-  rect(0, 0-co2sum, 20, co2sum);
+  rect(0, 0-co2sum/2.0f, 20, co2sum);
   
   fill(color(40));
   noStroke();
