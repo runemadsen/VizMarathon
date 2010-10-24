@@ -2,6 +2,7 @@ import controlP5.*;
 
 ControlP5 controlP5;
 Slider s;
+Habitat h;
 
 String lines[];
 int yr[];
@@ -12,14 +13,59 @@ int sliderVal = 1950;
 
 int curYearIndex = 0;
 
+boolean foo = false;
+
 gmslModule gm;
 co2RegModule co2;
 ppmModule ppm;
+
+TemperatureVisualizer tempViz;
 
 // in sqkm
 final float EARTH_SUR = 148940000.0f;
 
 PFont silk8;
+
+ArrayList circles;
+long iterationCounter = 0;
+
+class Circle {
+  public float x, y, radius;
+  public color myColor;
+  
+  public Circle(float x, float y, float radius) {
+    this.x = x;
+    this.y = y;
+    this.radius = radius;
+    myColor = color(64,64,64,64);
+  }
+  
+  public void draw() {
+    fill(myColor);
+    stroke(myColor);
+    strokeWeight(3);
+    ellipse((int)x, (int)y, (int)radius*2, (int)radius*2);
+  }
+ 
+ public boolean contains(float x, float y) {
+   float dx = this.x - x;
+   float dy = this.y - y;
+   return sqrt(dx*dx + dy*dy) <= radius;
+ }
+  
+  public float distanceToCenter() {
+    float dx = x - WIDTH/2;
+    float dy = y - HEIGHT/2;
+    return (sqrt(dx*dx + dy*dy));
+  } 
+  
+  public boolean intersects(Circle c) {
+    float dx = c.x - x;
+    float dy = c.y - y;
+    float d = sqrt(dx*dx + dy*dy);
+    return d < radius || d < c.radius;
+  }
+}
 
 
 class ppmModule
@@ -77,11 +123,41 @@ class co2RegModule
   }
 }
 
+void displayAtmos(float r)
+{
+   noFill();
+  
+  strokeWeight(2);
+  stroke(color(200, 200, 50));
+  int ppmind = 0;
+  if(sliderVal >= 1980)
+      ppmind = sliderVal - 1980;
+      
+  ellipse(0, 0, 2*r + ppm.data[min(ppmind, 29)]/2.0f, 2*r + ppm.data[min(ppmind, 29)]/2.0f);
+  line(cos(PI/3) * (r + ppm.data[min(ppmind, 29)]/4.0f), - sin(PI/3) * (r + ppm.data[min(ppmind, 29)]/4.0f), cos(PI/3) * 1.3 *(r + ppm.data[min(ppmind, 29)]/4.0f), - sin(PI/3) * 1.3 * (r + ppm.data[min(ppmind, 29)]/4.0f));
+  fill(color(40));
+  noStroke();
+  
+  text(ppm.data[min(ppmind, 29)] + " parts per million CO2 concentration", cos(PI/3) * 1.3 *(r + ppm.data[min(ppmind, 29)]/4.0f), - sin(PI/3) * 1.3 * (r + ppm.data[min(ppmind, 29)]/4.0f));
+  
+  noFill();
+  stroke(color(255, 20, 20));
+  ellipse(0, 0, 2*r + 350.0f/2.0f, 2*r + 350.0f/2.0f);
+  line(cos(PI/3.5f) * (r + 350.0f/4.0f),  - sin(PI/3.5f) * (r + 350.0f/4.0f), cos(PI/3.5f) * 1.3 *(r + 350.0f/4.0f), - sin(PI/3.5f) * 1.3 * (r + 350.0f/4.0f));
+  fill(color(40));
+  noStroke();
+  
+  text(350.0f + " boundary CO2 parts per million.", cos(PI/3.5f) * 1.3 *(r + 350.0f/4.0f), - sin(PI/3.5f) * 1.3 * (r + 350.0f/4.0f));
+  
+  
+}
+
 class gmslModule
 {
   String lines[];
   int yr_raw[], yr[];
   public float gmsl_raw[], gmsl[];
+  int yer = 1950;
   
   public gmslModule()
   {
@@ -114,25 +190,51 @@ class gmslModule
        gmsl[i] = avg;
       // println(avg);
     }
-  } 
+  }
+ 
+ public void setYear(int y)
+ {
+   yer = y;
+ } 
+ 
+ public void display(float r)
+ {
+   // GMSL
+  noStroke();
+  
+  fill(color(180, 180, 220));
+  float d = 2*r + 2*gmsl[min(curYearIndex, 50)]/4;
+ // ellipse(width/2, height/2, d, d);
+  for(int i = 0; i < 12; i++)
+  {
+     float val = 2*r + 2*gmsl_raw[min(curYearIndex, 50)*12+i]/4;
+     //fill(color(180, 180, i*10+50));
+     arc(0, 0, val, val, i * 2*PI/12 - PI/2, (i+1) * 2*PI/12 - PI/2);
+  }
+ }
 }
 
 void setup()
 {
   ellipseMode(CENTER);
   rectMode(CENTER);
-  size(1024, 768);
+  size(1440, 900);
   background(255);
   smooth();
   
   silk8 = loadFont("Silkscreen-8.vlw"); 
+  textFont(silk8);
+  
+  h = new Habitat();
   
   gm = new gmslModule();
   co2 = new co2RegModule();
   ppm = new ppmModule();
+  tempViz = new TemperatureVisualizer();
   
   controlP5 = new ControlP5(this);
   s = controlP5.addSlider("sliderVal",1950,2049,100,height-100,width-200,10);
+  s.setId(1);
   s.setArrayValue(new float[] {0, 100});  
 
   lines = loadStrings("worldpopulation.csv");
@@ -167,6 +269,8 @@ void setup()
      ellipse(i * 10, 100, total[i]/200000000.0f, total[i]/200000000.0f);
      */
   }
+  
+ circles = createPackC(); 
 }
 
 void update()
@@ -175,6 +279,40 @@ void update()
   
   
   curYearIndex = sliderVal - 1950;
+  
+}
+
+ArrayList createPackC()
+{
+  ArrayList circles = new ArrayList();
+  //colorMode(HSB, 255);
+  
+    for(int i = 0; i < co2.data.length; i++)
+  {
+    int ind = 0;
+    if(sliderVal >= 1971)
+      ind = sliderVal - 1971;
+     
+     float rc = sqrt(co2.data[i][min(ind, 37)]/PI);
+     
+     Circle c = new Circle(width/2+100 * cos(i * 2*PI/co2.data.length), height/2-100*sin(i * 2*PI/co2.data.length),  rc);
+     c.myColor = color(200, 200, 100);
+     circles.add(c);
+    
+    /*
+    pushMatrix();
+    translate(width/2 + r * cos(i * 2*PI/co2.data.length), height/2-r*sin(i * 2*PI/co2.data.length));
+    fill(color(200, 200, 50));
+    ellipse(0, 0, 1 * rc * 2,  1 * rc * 2);
+    fill(color(30));
+    text(co2.regions[i], 0, 0); 
+    popMatrix();
+    */
+  }
+  
+  //colorMode(RGB,255);
+  return circles;
+ 
 }
 
 void draw()
@@ -183,73 +321,187 @@ void draw()
   
   background(255);
   
- // noStroke();
+  h.setYear(sliderVal);
+  h.display();
   
+ // noStroke();
   
   float space_sqm = 1000000 * EARTH_SUR / total[curYearIndex];
   
   float r = sqrt(space_sqm/PI);
  // println(r);
   
-  // GMSL
-  noStroke();
   
-  fill(color(100, 100, 200));
-  ellipse(width/2, height/2, 2*r + 2*gm.gmsl[min(curYearIndex, 50)]/4, 2*r + 2*gm.gmsl[min(curYearIndex, 50)]/4);
-  
+  // GMSL  
+  pushMatrix();
+  translate(width/2, height/2);
+  gm.display(r);
+  popMatrix();
   
 
   // PLANET
+  pushMatrix();
+  translate(width/2, height/2);
   strokeWeight(2);
   stroke(color(40));
   fill(color(240));
-  ellipse(width/2, height/2, 2*r, 2*r);
+  ellipse(0, 0, 2*r, 2*r);
+  popMatrix();
+  
+  
+  
+  // TEMP
+  tempViz.setYear(min(sliderVal, 2010));
+  pushMatrix();
+  translate(width/2, height/2);
+  scale(2.0f);
+  tempViz.display();
+  popMatrix();
+  
+  noStroke();
+  noFill();
+  colorMode(RGB, 255);
+  
   
   // ATMOSPHERE PPM
   
-  noFill();
+  pushMatrix();
+  translate(width/2, height/2);
+  displayAtmos(r);
+  popMatrix();
+ 
   
-  strokeWeight(2);
-  stroke(color(200, 200, 50));
-  int ppmind = 0;
-  if(sliderVal >= 1980)
-      ppmind = sliderVal - 1980;
-      
-  ellipse(width/2, height/2, 2*r + ppm.data[min(ppmind, 29)]/2.0f, 2*r + ppm.data[min(ppmind, 29)]/2.0f);
-  line(width/2 + cos(PI/3) * (r + ppm.data[min(ppmind, 29)]/4.0f), height/2 - sin(PI/3) * (r + ppm.data[min(ppmind, 29)]/4.0f), width/2 + cos(PI/3) * 1.3 *(r + ppm.data[min(ppmind, 29)]/4.0f), height/2 - sin(PI/3) * 1.3 * (r + ppm.data[min(ppmind, 29)]/4.0f));
-  fill(color(40));
-  noStroke();
+  float co2sum = .0f;
   
-  text(ppm.data[min(ppmind, 29)] + " parts per million CO2 concentration", width/2 + cos(PI/3) * 1.3 *(r + ppm.data[min(ppmind, 29)]/4.0f), height/2 - sin(PI/3) * 1.3 * (r + ppm.data[min(ppmind, 29)]/4.0f));
-  
-  noFill();
-  stroke(color(255, 20, 20));
-  ellipse(width/2, height/2, 2*r + 350.0f/2.0f, 2*r + 350.0f/2.0f);
-  line(width/2 + cos(PI/3.5f) * (r + 350.0f/4.0f), height/2 - sin(PI/3.5f) * (r + 350.0f/4.0f), width/2 + cos(PI/3.5f) * 1.3 *(r + 350.0f/4.0f), height/2 - sin(PI/3.5f) * 1.3 * (r + 350.0f/4.0f));
-  fill(color(40));
-  noStroke();
-  
-  text(350.0f + " boundary CO2 parts per million.", width/2 + cos(PI/3.5f) * 1.3 *(r + 350.0f/4.0f), height/2 - sin(PI/3.5f) * 1.3 * (r + 350.0f/4.0f));
-  
-  
-
-  
-  textFont(silk8);
   for(int i = 0; i < co2.data.length; i++)
   {
     int ind = 0;
     if(sliderVal >= 1971)
       ind = sliderVal - 1971;
-    
-    pushMatrix();
-    translate(width/2 + r * cos(i * 2*PI/co2.data.length), height/2-r*sin(i * 2*PI/co2.data.length));
-    fill(color(200, 200, 50));
-    ellipse(0, 0, .02 * co2.data[i][min(ind, 37)],  .02 * co2.data[i][min(ind, 37)]);
-    fill(color(30));
-    text(co2.regions[i], 0, 0); 
-    popMatrix();
+      
+     co2sum += co2.data[i][min(ind, 37)];
+     
+     float rc = sqrt(co2.data[i][min(ind, 37)]/PI);
   }
+  
+  
+  
+  // CIRCLE PACKING
+  pushMatrix();
+  translate(0, 0);
+  for (int i=0; i<circles.size(); i++) {
+    ((Circle)circles.get(i)).draw();
+    fill(color(30));
+    text(co2.regions[i], ((Circle)circles.get(i)).x, ((Circle)circles.get(i)).y); 
+  } 
+  for (int i=1; i<50; i++) {
+    iterateLayout(i);
+  }
+  popMatrix();
+  
+  
+  // PERSONAL PPM
+  co2sum /= total[curYearIndex];
+  co2sum *= 10000000; // in million tons, so scale by 1 million ---> 10 million to get better visual scale
+  pushMatrix();
+  translate(width/2, 100);
+  fill(color(200, 200, 50));
+  rect(0, 0-co2sum/2.0f, 20, co2sum);
+  
+  fill(color(40));
+  noStroke();
+  text(("" + co2sum/10.0f + " tons personal co2 emission "), 30, -co2sum);
+  popMatrix();
+  
+  
+  
  
   
+}
+
+void mouseReleased()
+{
+   // circles = createPackC(); 
+}
+
+Comparator comp = new Comparator() {
+    public int compare(Object p1, Object p2) {
+      Circle a = (Circle)p1;
+      Circle b = (Circle)p2;
+      if (a.distanceToCenter() < b.distanceToCenter()) 
+        return 1;
+      else if (a.distanceToCenter() > b.distanceToCenter())
+        return -1;
+      else
+        return 0;
+    }
+};
+
+void iterateLayout(int iterationCounter) {
+
+  Object circs[] = circles.toArray();
+  Arrays.sort(circs, comp);
+
+  //fix overlaps
+  Circle ci, cj;
+  PVector v = new PVector();
+
+  for (int i=0; i<circs.length; i++) {
+    ci = (Circle)circs[i];
+    for (int j=i+1; j<circs.length; j++) {
+      if (i != j) {
+        cj = (Circle)circs[j];
+        float dx = cj.x - ci.x;
+        float dy = cj.y - ci.y;
+        float r = ci.radius + cj.radius;
+        float d = (dx*dx) + (dy*dy);
+        if (d < (r * r) - 0.01 ) {
+
+          v.x = dx;
+          v.y = dy;
+
+          v.normalize();
+          v.mult((r-sqrt(d))*0.5);
+
+            cj.x += v.x;
+            cj.y += v.y;
+   
+            ci.x -= v.x;
+            ci.y -= v.y;       
+        }
+      }
+    }
+  }
+
+  //Contract
+  float damping = 0.1/(float)(iterationCounter);
+  for (int i=0; i<circs.length; i++) {
+    Circle c = (Circle)circs[i];
+      v.x = c.x-width/2;
+      v.y = c.y-height/2;
+      v.mult(damping);
+      c.x -= v.x;
+      c.y -= v.y;
+  }
+}
+
+ArrayList createRandomCircles(int n) {
+  ArrayList circles = new ArrayList();
+  colorMode(HSB, 255);
+  while (n-- > 0) {
+    Circle c = new Circle(random(width), random(height), random(n)+10);
+    c.myColor = color(random(255), 128, 200, 128);
+    circles.add(c);
+  }
+  colorMode(RGB,255);
+  return circles;
+}
+
+void controlEvent(ControlEvent theEvent) {
+  switch(theEvent.controller().id()) {
+    case(1):
+     circles = createPackC(); 
+    break;
+  }
 }
 
