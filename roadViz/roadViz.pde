@@ -1,7 +1,7 @@
 RoadSystem roadSystem;
 
 void setup() {
-  size(1024, 768);
+  size(1440, 900);
 
   // Set the X / Y in the constructor
   roadSystem = new RoadSystem(width / 2, height / 2);

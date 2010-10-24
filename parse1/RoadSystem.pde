@@ -317,8 +317,6 @@ class RoadSystem {
     for(int j = getMaxDepth(); j > 0; j--) {
       roads = getRoadsAtDepth(j);
       
-
-
       for(int i = roads.size() - 1; i > 0; i--) {
         if(roads.get(i).isHighway) {
           roads.get(i).isHighway = false;
@@ -416,19 +414,19 @@ class Road {
     y2 = y1 + (sin(radians(angle)) * roadLength);
 
     // must be a connection
-    if(connection != null) {
-      // find point on the parent
-      x1 = parent.x1 + (cos(radians(parent.angle)) * parent.roadLength * (parentPercent / 100));
-      y1 = parent.y1 + (sin(radians(parent.angle)) * parent.roadLength * (parentPercent / 100));    
-
-      // find point on connection
-      x2 = connection.x1 + (cos(radians(connection.angle)) * connection.roadLength * (connectionPercent / 100));
-      y2 = connection.y1 + (sin(radians(connection.angle)) * connection.roadLength * (connectionPercent / 100));
-
-      // derrive the angle and length after the fact
-      angle = degrees(atan((connection.y2 - connection.y1) / (connection.x2 - connection.x1)));
-      roadLength = dist(x1, y1, x2, y2);
-    }
+//    if(connection != null) {
+//      // find point on the parent
+//      x1 = parent.x1 + (cos(radians(parent.angle)) * parent.roadLength * (parentPercent / 100));
+//      y1 = parent.y1 + (sin(radians(parent.angle)) * parent.roadLength * (parentPercent / 100));    
+//
+//      // find point on connection
+//      x2 = connection.x1 + (cos(radians(connection.angle)) * connection.roadLength * (connectionPercent / 100));
+//      y2 = connection.y1 + (sin(radians(connection.angle)) * connection.roadLength * (connectionPercent / 100));
+//
+//      // derrive the angle and length after the fact
+//      angle = degrees(atan((connection.y2 - connection.y1) / (connection.x2 - connection.x1)));
+//      roadLength = dist(x1, y1, x2, y2);
+//    }
 
     // recurse as necessarry
     for(int i = 0; i < children.size(); i++) {

@@ -7,7 +7,7 @@ class RoadSystem {
 
   // Road variables
   Road firstRoad;
-  int startRoads = 8;
+  int startRoads = 5;
   int targetLength = 0;
   int targetHighwayLength = 0;
   int totalHighwayLength = 0;
@@ -91,11 +91,12 @@ class RoadSystem {
     }
 
     // Build the road
-    tempRoad = new Road(tempParent, tempParent.angle + random(-80, 80), random(50, 70), random(50, 100));        
+    tempRoad = new Road(tempParent, tempParent.angle + random(-50, 50), random(50, 80), round(random(1, 4)) * 25);        
 
     if(firstRoad.children.size() < startRoads) {
       tempRoad.setOrigin();
-      tempRoad.setRoadAngle(firstRoad.children.size() * 30 + random(-5, 5));
+      tempRoad.roadLength = 120;
+      tempRoad.setRoadAngle(firstRoad.children.size() * 60 + random(-5, 5));
     }
 
     // make connections now and then
@@ -341,7 +342,11 @@ class Road {
   int depth = 0;
   int maxChildren = 1;
   boolean isOrigin = false; 
-  boolean isHighway = true;
+  boolean isHighway = false;
+  float lerpLength = 0;
+  int framesOld = 0;
+  int growthTime = 10; // time to grow in frames
+  boolean grown = false;
 
   // Initial constructor
   Road(float _x1, float _y1, float _angle, float _roadLength) {
@@ -369,6 +374,10 @@ class Road {
     depth = parent.depth + 1;
     calculateLine();
   }
+
+
+
+
 
   // Connection constructor
   Road(Road _parent, Road _connection, float _percent, float _connectionPercent) {
@@ -451,24 +460,44 @@ class Road {
   }
 
   void display() {
-   
-
+    
     // Draw
     strokeWeight(thickness);
     if(isHighway) strokeWeight(thickness + 2); // highways are beefier
-    strokeCap(SQUARE);
+    strokeCap(ROUND);
     smooth();
+    
+    // square the ends if we're childless
+    if(children.size() == 0) strokeCap(SQUARE);
 
     stroke(map(depth, 0, 5, 0, 20));
     if(connection != null || isHighway) stroke(255, 0, 0); // TODO fix connections
 
+    if(framesOld < growthTime) {
+      x2 = x1 + (cos(radians(angle)) * map(framesOld, 0, growthTime, 0, roadLength));
+      y2 = y1 + (sin(radians(angle)) * map(framesOld, 0, growthTime, 0, roadLength));
+    }
+    else {
+      x2 = x1 + (cos(radians(angle)) * roadLength);
+      y2 = y1 + (sin(radians(angle)) * roadLength);
+      grown = true;
+    }
+    
     line(x1, y1, x2, y2);
 
     // Recursively draw all children
-    for(int i = 0; i < children.size(); i++) {
-      children.get(i).display();
+    if(grown) {
+      for(int i = 0; i < children.size(); i++) {
+        children.get(i).display();
+      }
     }
+    
+    framesOld++;
+    
+
 
   }
 }
+
+
 
