@@ -29,44 +29,6 @@ PFont silk8;
 ArrayList circles;
 long iterationCounter = 0;
 
-class Circle {
-  public float x, y, radius;
-  public color myColor;
-  
-  public Circle(float x, float y, float radius) {
-    this.x = x;
-    this.y = y;
-    this.radius = radius;
-    myColor = color(64,64,64,64);
-  }
-  
-  public void draw() {
-    fill(myColor);
-    stroke(myColor);
-    strokeWeight(3);
-    ellipse((int)x, (int)y, (int)radius*2, (int)radius*2);
-  }
- 
- public boolean contains(float x, float y) {
-   float dx = this.x - x;
-   float dy = this.y - y;
-   return sqrt(dx*dx + dy*dy) <= radius;
- }
-  
-  public float distanceToCenter() {
-    float dx = x - WIDTH/2;
-    float dy = y - HEIGHT/2;
-    return (sqrt(dx*dx + dy*dy));
-  } 
-  
-  public boolean intersects(Circle c) {
-    float dx = c.x - x;
-    float dy = c.y - y;
-    float d = sqrt(dx*dx + dy*dy);
-    return d < radius || d < c.radius;
-  }
-}
-
 
 class ppmModule
 {
@@ -334,14 +296,14 @@ void draw()
   
   // GMSL  
   pushMatrix();
-  translate(width/2, height/2);
+  translate(width/4, height/4);
   gm.display(r);
   popMatrix();
   
 
   // PLANET
   pushMatrix();
-  translate(width/2, height/2);
+  translate(width/4, height/4);
   strokeWeight(2);
   stroke(color(40));
   fill(color(240));
@@ -353,7 +315,7 @@ void draw()
   // TEMP
   tempViz.setYear(min(sliderVal, 2010));
   pushMatrix();
-  translate(width/2, height/2);
+  translate(width/4, height/4);
   scale(2.0f);
   tempViz.display();
   popMatrix();
@@ -366,7 +328,7 @@ void draw()
   // ATMOSPHERE PPM
   
   pushMatrix();
-  translate(width/2, height/2);
+  translate(3*width/4, 3*height/4);
   displayAtmos(r);
   popMatrix();
  
@@ -383,12 +345,13 @@ void draw()
      
      float rc = sqrt(co2.data[i][min(ind, 37)]/PI);
   }
+
   
   
   
   // CIRCLE PACKING
   pushMatrix();
-  translate(0, 0);
+  translate(width/4, height/4);
   for (int i=0; i<circles.size(); i++) {
     ((Circle)circles.get(i)).draw();
     fill(color(30));
