@@ -1,0 +1,220 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<title>colorMode() \ Language (API) \ Processing 1.0</title>
+		
+		<link rel="icon" href="img/processing-1.ico" type="image/x-icon" />
+		<link rel="shortcut icon" href="img/processing-1.ico" type="image/x-icon" />
+		
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="Author" content="Casey Reas &amp; Ben Fry" />
+		<meta name="Publisher" content="Processing" />
+		<meta name="Keywords" content="Processing, Processing, Interactive Media, Electronic Arts, Programming, Java, Ben Fry, Casey Reas" />
+		<meta name="Description" content="Processing is an electronic sketchbook for developing 
+				ideas. It is a context for learning fundamentals of computer programming 
+				within the context of the electronic arts." />
+		<meta name="Copyright" content="All contents copyright Ben Fry, Casey Reas,  MIT Media Laboratory" />
+		
+		<script src="javascript/MM_functions.js" type="text/javascript"></script>
+	
+		<link href="css/style.css" rel="stylesheet" type="text/css" />
+	</head>
+	<body id="Langauge" onload="" >
+		
+		<!-- ==================================== PAGE ============================ --> 
+		<div id="container">
+	
+			<!-- ==================================== HEADER ============================ --> 
+			<div id="header">
+				<a href="http://processing.org/"><img src="img/processing.gif" alt="Processing cover" title="Back to the reference index." /></a>
+				<form name="search" method="get" action="http://www.google.com/search">
+				<label>Search processing.org:</label> 
+				       <p><input type="hidden" name="as_sitesearch" value="processing.org" />
+				       <input type="text" name="as_q" value="" size="20" class="text" /> 
+						<input type="image" src="img/search_button.gif" value="Submit" alt="Submit" /></p>
+				</form>
+			</div> 
+						<div id="navigation">
+				<div class="navBar" id="mainnav_noSub">
+					<a href="index.html" class="active">Language</a> \ 
+					<a href="libraries/index.html">Libraries</a> \ 
+					<a href="tools/index.html">Tools</a> \ 
+					<a href="environment/index.html">Environment</a> \ 
+					<a href="compare/index.html">Compare</a> \ 
+					<a href="troubleshooting/index.html">Troubleshooting</a>
+				</div>
+			</div>
+
+		
+			<a id="TOP" name="TOP"></a>
+			
+			<!-- ==================================== CONTENT - Headers ============================ -->
+			<div class="content">
+			
+			 <div id="reference-nav">
+    <a href="index.html">Abridged</a> (<a href="index_alpha.html">A-Z</a>) \ <a href="index_ext.html">Extended</a> (<a href="index_alpha_ext.html">A-Z</a>) \ <a href="changes.html">Changes</a>
+    <p></p>
+</div>
+<p class="ref-notice">Reference for Processing version 1.0+. If you have a previous version, use the reference included with your software. <em>If you see any errors or have any comments, <a href="http://processing.org/discourse/yabb_beta/YaBB.cgi?board=WebsiteBugs">let us know</a>.</em></p>
+
+<table cellpadding="0" cellspacing="0" border="0" class="ref-item">
+	<tr class="name-row">
+		<th scope="row">Name</th>
+		<td><h3>colorMode()</h3></td>
+	</tr>
+
+	<tr class="">
+		<th scope="row">Examples</th>
+		<td><div class="example"><img src="media/colorMode_.jpg" alt="example pic" /><pre class="margin">noStroke();
+colorMode(RGB, 100);
+for (int i = 0; i < 100; i++) {
+  for (int j = 0; j < 100; j++) {
+    stroke(i, j, 0);
+    point(i, j);
+  }
+}</pre></div><div class="example"><img src="media/colorMode_2.jpg" alt="example pic" /><pre class="margin">noStroke();
+colorMode(HSB, 100);
+for (int i = 0; i < 100; i++) {
+  for (int j = 0; j < 100; j++) {
+    stroke(i, j, 100);
+    point(i, j);
+  }
+}</pre></div><div class="example"><img src="media/colorMode_3.gif" alt="example pic" /><pre class="margin">// If the color is defined here, it won't be 
+// affected by the colorMode() in setup(). 
+// Instead, just declare the variable here and 
+// assign the value after the colorMode() in setup()
+//color bg = color(180, 50, 50);  // No
+color bg;  // Yes, but assign it in setup()
+
+void setup() {
+  size(100, 100);
+  colorMode(HSB, 360, 100, 100);
+  bg = color(180, 50, 50);
+}
+
+void draw() {
+  background(bg);	
+}</pre></div></td>
+	</tr>
+
+	<tr class="">
+		<th scope="row">Description</th>
+		<td>Changes the way Processing interprets color data. By default, the parameters for <b>fill()</b>, <b>stroke()</b>, <b>background()</b>, and <b>color()</b> are defined by values between 0 and 255 using the RGB color model. The <b>colorMode()</b> function is used to change the numerical range used for specifying colors and to switch color systems. For example, calling <b>colorMode(RGB, 1.0)</b> will specify that values are specified between 0 and 1. The limits for defining colors are altered by setting the parameters range1, range2, range3, and range 4.</td>
+	</tr>
+
+	<tr class="">
+		<th scope="row">Syntax</th>
+		<td><pre>colorMode(<kbd>mode</kbd>);
+colorMode(<kbd>mode</kbd>, <kbd>range</kbd>);
+colorMode(<kbd>mode</kbd>, <kbd>range1</kbd>, <kbd>range2</kbd>, <kbd>range3</kbd>);
+colorMode(<kbd>mode</kbd>, <kbd>range1</kbd>, <kbd>range2</kbd>, <kbd>range3</kbd>, <kbd>range4</kbd>);</pre></td>
+	</tr>
+
+	<tr class="">
+		<th scope="row">Parameters</th>
+		<td><table cellpadding="0" cellspacing="0" border="0">
+	<tr class="">
+		<th scope="row">mode</th>
+		<td>Either RGB or HSB, corresponding to Red/Green/Blue and Hue/Saturation/Brightness</td>
+	</tr>
+
+	<tr class="">
+		<th scope="row">range</th>
+		<td>int or float: range for all color elements</td>
+	</tr>
+
+	<tr class="">
+		<th scope="row">range1</th>
+		<td>int or float: range for the red or hue depending on the current color mode</td>
+	</tr>
+
+	<tr class="">
+		<th scope="row">range2</th>
+		<td>int or float: range for the green or saturation depending on the current color mode</td>
+	</tr>
+
+	<tr class="">
+		<th scope="row">range3</th>
+		<td>int or float: range for the blue or brightness depending on the current color mode</td>
+	</tr>
+
+	<tr class="">
+		<th scope="row">range4</th>
+		<td>int or float: range for the alpha</td>
+	</tr>
+</table></td>
+	</tr>
+
+	<tr class="">
+		<th scope="row">Returns</th>
+		<td>None</td>
+	</tr>
+
+	<tr class="">
+		<th scope="row">Usage</th>
+		<td>Web & Application</td>
+	</tr>
+
+	<tr class="">
+		<th scope="row">Related</th>
+		<td><a href="background_.html">background()</a><br /><a href="fill_.html">fill()</a><br /><a href="stroke_.html">stroke()</a><br /></td>
+	</tr>
+</table>
+
+Updated on November 22, 2008 08:39:25pm PST<br /><br />
+
+<!-- Creative Commons License -->
+
+<div class="license">
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/2.0/"><img alt="Creative Commons License" border="0" src="http://creativecommons.org/images/public/somerights20.gif" /></a>
+</div>
+<!--
+
+<rdf:RDF xmlns="http://web.resource.org/cc/"
+ xmlns:dc="http://purl.org/dc/elements/1.1/"
+ xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+<Work rdf:about="">
+   <dc:title>Processing.org Reference</dc:title>
+   <dc:date>2004</dc:date>
+   <dc:description>Reference for the Processing.org programming environment and language.</dc:description>
+   <dc:creator><Agent>
+      <dc:title>Casey Reas et al.</dc:title>
+   </Agent></dc:creator>
+   <dc:rights><Agent>
+      <dc:title>Casey Reas</dc:title>
+   </Agent></dc:rights>
+   <dc:type rdf:resource="http://purl.org/dc/dcmitype/Text" />
+   <license rdf:resource="http://creativecommons.org/licenses/by-nc-sa/2.0/" />
+</Work>
+
+<License rdf:about="http://creativecommons.org/licenses/by-nc-sa/2.0/">
+   <permits rdf:resource="http://web.resource.org/cc/Reproduction" />
+   <permits rdf:resource="http://web.resource.org/cc/Distribution" />
+   <requires rdf:resource="http://web.resource.org/cc/Notice" />
+   <requires rdf:resource="http://web.resource.org/cc/Attribution" />
+   <prohibits rdf:resource="http://web.resource.org/cc/CommercialUse" />
+   <permits rdf:resource="http://web.resource.org/cc/DerivativeWorks" />
+   <requires rdf:resource="http://web.resource.org/cc/ShareAlike" />
+</License>
+
+</rdf:RDF>
+
+-->
+			
+			</div>
+
+			<!-- ==================================== FOOTER ============================ --> 
+  			<div id="footer">
+    			<div id="copyright">Processing was initiated by <a href="http://benfry.com/">Ben Fry</a> and <a href="http://reas.com">Casey Reas</a>. It is developed by a <a href="people.html">small team of volunteers</a>.</div>  
+    			<div id="colophon">
+
+                    <a href="copyright.html">&copy; Info</a> \ 
+
+                    <span>Site hosted by <a href="http://www.mediatemple.net">Media Temple!</a></span>
+
+                </div>
+  			</div>
+  			
+		</div>
+	</body>
+</html>
