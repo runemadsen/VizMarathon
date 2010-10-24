@@ -194,7 +194,7 @@ void draw()
   // GMSL
   noStroke();
   
-  fill(color(100, 100, 200));
+  fill(color(180, 180, 220));
   ellipse(width/2, height/2, 2*r + 2*gm.gmsl[min(curYearIndex, 50)]/4, 2*r + 2*gm.gmsl[min(curYearIndex, 50)]/4);
   
   
@@ -235,20 +235,40 @@ void draw()
 
   
   textFont(silk8);
+  
+  float co2sum = .0f;
+  
   for(int i = 0; i < co2.data.length; i++)
   {
     int ind = 0;
     if(sliderVal >= 1971)
       ind = sliderVal - 1971;
+      
+     co2sum += co2.data[i][min(ind, 37)];
+     
+     float rc = sqrt(co2.data[i][min(ind, 37)]/PI);
     
     pushMatrix();
     translate(width/2 + r * cos(i * 2*PI/co2.data.length), height/2-r*sin(i * 2*PI/co2.data.length));
     fill(color(200, 200, 50));
-    ellipse(0, 0, .02 * co2.data[i][min(ind, 37)],  .02 * co2.data[i][min(ind, 37)]);
+    ellipse(0, 0, 1 * rc * 2,  1 * rc * 2);
     fill(color(30));
     text(co2.regions[i], 0, 0); 
     popMatrix();
   }
+  
+  co2sum /= total[curYearIndex];
+  co2sum *= 10000000; // in million tons, so scale by 1 million ---> 10 million to get better visual scale
+  pushMatrix();
+  translate(width/2, height/2 - 2*r);
+  fill(color(200, 200, 50));
+  rect(0, 0-co2sum, 20, co2sum);
+  
+  fill(color(40));
+  noStroke();
+  text(("" + co2sum/10.0f + " tons personal co2 emission "), 30, -co2sum);
+  popMatrix();
+  
  
   
 }
