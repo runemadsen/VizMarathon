@@ -15,15 +15,12 @@ int curYearIndex = 0;
 
 boolean foo = false;
 
-int ANIMAX = 5000;
-
 gmslModule gm;
 co2RegModule co2;
 ppmModule ppm;
 
 TemperatureVisualizer tempViz;
 FuelConsumptionVisualizer fuelViz;
-RoadSystem roadSys;
 
 // in sqkm
 final float EARTH_SUR = 148940000.0f;
@@ -33,11 +30,6 @@ PFont silk8;
 ArrayList circles;
 long iterationCounter = 0;
 
-TimeBar bar;
-
-PVector seatemp, planet, roads, habitat, stats;
-float animationCounter = .0f;
-String active = "a";
 
 class ppmModule
 {
@@ -205,9 +197,6 @@ void setup()
   silk8 = loadFont("Silkscreen-8.vlw"); 
   textFont(silk8);
   
-  bar = new TimeBar();
-  bar.setLocation(0, 800);
-  
   h = new Habitat();
   
   gm = new gmslModule();
@@ -215,20 +204,11 @@ void setup()
   ppm = new ppmModule();
   tempViz = new TemperatureVisualizer();
   fuelViz = new FuelConsumptionVisualizer();
-  roadSys = new RoadSystem(0, 0);
   
-  active = "roads";
-  int xoff = 150;
-  roads = new PVector(xoff, height/5);
-  seatemp = new PVector(xoff, 2*height/5);
-  habitat = new PVector(xoff, 3*height/5);
-  planet = new PVector(xoff, 4*height/5);
-  
-  
- // controlP5 = new ControlP5(this);
- // s = controlP5.addSlider("sliderVal",1950,2049,100,height-100,width-200,10);
-  //s.setId(1);
- // s.setArrayValue(new float[] {0, 100});  
+  controlP5 = new ControlP5(this);
+  s = controlP5.addSlider("sliderVal",1950,2049,100,height-100,width-200,10);
+  s.setId(1);
+  s.setArrayValue(new float[] {0, 100});  
 
   lines = loadStrings("worldpopulation.csv");
 
@@ -270,7 +250,7 @@ void update()
 {
  // println(sliderVal);
   
-  sliderVal = bar.getYear();
+  
   curYearIndex = sliderVal - 1950;
   
 }
@@ -312,13 +292,7 @@ void draw()
 {
   update();
   
-  textFont(silk8);
-  
   background(255);
-  
-  animationCounter -= 50.0f;
-  if(animationCounter <= 0) animationCounter = .0f;
-    
   
   h.setYear(sliderVal);
   h.display();
@@ -329,40 +303,26 @@ void draw()
   
   float r = sqrt(space_sqm/PI);
  // println(r);
- 
- PVector cent = new PVector(width/2, height/2);
- 
-  // ROADS
+<<<<<<< HEAD
+  
   pushMatrix();
-  if(active.equals("roads") && animationCounter == .0f){
-    translate(width/2, height/2);
-  } else if (!active.equals("roads") && animationCounter == .0f){
-    translate(roads.x, roads.y);
-    scale(.25f);
-  } else if (!active.equals("roads") && animationCounter > .0f) {
-    PVector v = PVector.add(roads, (PVector.mult(PVector.sub(cent, roads), animationCounter/float(ANIMAX))));
-     translate( v.x, v.y );
-     scale( map(animationCounter, 0, ANIMAX, .25f, 1.0f));
-  } else if (active.equals("roads") && animationCounter > .0f){
-      PVector v = PVector.add(cent, (PVector.mult(PVector.sub(roads, cent), animationCounter/float(ANIMAX))));
-     translate( v.x, v.y );
-     scale( map(animationCounter, 0, ANIMAX, 1.0f, 0.25f));
-  }
-  roadSys.setYear(sliderVal);
-  roadSys.display();
+  scale(1.5);
+=======
+  r = 100;
+>>>>>>> b1e28fb1e1ae462b201b1e15c86ca76d109ad670
+  
+  // GMSL  
+  pushMatrix();
+  translate(width/4, height/4);
+  gm.display(100);
+  fill(color(255));
+  ellipse(0, 0, 200, 200);
   popMatrix();
   
-  
-  pushMatrix();
-  if(active.equals("planet") && animationCounter == .0f)
-  {
-    translate(width/2, height/2);
-  } else if(animationCounter == .0f){
-    translate(planet.x, planet.y);
-    scale(.25f);
-  }
+
   // PLANET
-  
+  pushMatrix();
+  translate(2*width/4, 2*height/4);
   strokeWeight(2);
   stroke(color(40));
   fill(color(240));
@@ -373,22 +333,14 @@ void draw()
   popMatrix();
   
   
-   // GMSL  
-  pushMatrix();
-  scale(1.5);
-  pushMatrix();
-  translate(width/4, height/4);
-  gm.display(100);
-  fill(color(255));
-  ellipse(0, 0, 200, 200);
-  popMatrix();
-  
-  
   pushMatrix();
   translate(width/4, height/4);
   
   fill(color(10));
   ellipse(0, 0, 200, 200);
+  
+
+  
   popMatrix();
   
   // TEMP
@@ -399,9 +351,11 @@ void draw()
   tempViz.display();
   popMatrix();
   
+  
   noStroke();
   noFill();
  
+  
   colorMode(RGB, 255);
   
   pushMatrix();
@@ -429,9 +383,7 @@ void draw()
   popMatrix();
   
   
- 
- 
-  // ATMOSPHERE PPM
+    // ATMOSPHERE PPM
   
   pushMatrix();
   translate(width/4, height/4);
@@ -496,32 +448,15 @@ void draw()
   popMatrix();
   
   
-  bar.display();
+  
  
   
 }
 
-void mousePressed()
-{
-   bar.checkPress(); 
-}
-
 void mouseReleased()
 {
-  bar.stopDrag();
+   // circles = createPackC(); 
 }
-
-void mouseDragged()
-{
-  println("Mouse moved");
-  bar.checkDrag(); 
-  if(bar.dragging)
-  {
-    createPackC();
-  }
-}
-
-
 
 Comparator comp = new Comparator() {
     public int compare(Object p1, Object p2) {
@@ -584,22 +519,8 @@ void iterateLayout(int iterationCounter) {
   }
 }
 
-void keyPressed()
-{
-   if(key == '1'){
-      active = "roads";
-      animationCounter = ANIMAX;
-   } else if (key == '4'){
-      active = "planet"; 
-      animationCounter = ANIMAX;
-   }
-   
-  
-   
-}
 
 
-/*
 void controlEvent(ControlEvent theEvent) {
   switch(theEvent.controller().id()) {
     case(1):
@@ -607,5 +528,4 @@ void controlEvent(ControlEvent theEvent) {
     break;
   }
 }
-*/
 
