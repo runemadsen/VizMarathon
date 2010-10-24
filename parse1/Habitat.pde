@@ -87,46 +87,6 @@ class Habitat extends AbstractVisualizer
       }
     }
     
-    /*for(int i = 0; i < gridWidth; i += 20)
-    {
-        if(i < curX)
-        {
-           line(i, 0, i, curY);
-           // draw full to curY
-        }
-        else
-        {
-           line(i, 0, i, curY - (diameter + spacing));
-        } 
-    }*/
-   
-    /*float r = 0.1;
-    float theta = 0;
-    float rm = .20f;
-    
-    noFill();
-    stroke(#454a1a);
-    
-    for(int i = 0; i < getNumber(curYear); i++)
-    {
-      // Polar to Cartesian conversion
-      float x = r * cos(theta);
-      float y = r * sin(theta);
-    
-      // Draw an ellipse at x,y
-      noStroke();
-      fill(0);
-      ellipse(x, y, 10, 10); 
-      
-      // Increment the angle
-      
-      theta += 0.05 * 500/r;
-     
-      // Increment the radius
-      rm -=  0.001f;
-      r += rm;
-    }*/
-    
     popMatrix();
     fill(0, 0, 0);
     text("Current Year: " + curYear, 10, 20);

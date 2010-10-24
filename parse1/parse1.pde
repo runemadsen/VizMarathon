@@ -502,7 +502,7 @@ void draw()
   displayAtmos(100);
   popMatrix();
   
-   popMatrix();
+  popMatrix();
 
   
   // FUEL
