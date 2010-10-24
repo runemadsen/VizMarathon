@@ -20,6 +20,7 @@ co2RegModule co2;
 ppmModule ppm;
 
 TemperatureVisualizer tempViz;
+FuelConsumptionVisualizer fuelViz;
 
 // in sqkm
 final float EARTH_SUR = 148940000.0f;
@@ -28,44 +29,6 @@ PFont silk8;
 
 ArrayList circles;
 long iterationCounter = 0;
-
-class Circle {
-  public float x, y, radius;
-  public color myColor;
-  
-  public Circle(float x, float y, float radius) {
-    this.x = x;
-    this.y = y;
-    this.radius = radius;
-    myColor = color(64,64,64,64);
-  }
-  
-  public void draw() {
-    fill(myColor);
-    stroke(myColor);
-    strokeWeight(3);
-    ellipse((int)x, (int)y, (int)radius*2, (int)radius*2);
-  }
- 
- public boolean contains(float x, float y) {
-   float dx = this.x - x;
-   float dy = this.y - y;
-   return sqrt(dx*dx + dy*dy) <= radius;
- }
-  
-  public float distanceToCenter() {
-    float dx = x - WIDTH/2;
-    float dy = y - HEIGHT/2;
-    return (sqrt(dx*dx + dy*dy));
-  } 
-  
-  public boolean intersects(Circle c) {
-    float dx = c.x - x;
-    float dy = c.y - y;
-    float d = sqrt(dx*dx + dy*dy);
-    return d < radius || d < c.radius;
-  }
-}
 
 
 class ppmModule
@@ -209,8 +172,12 @@ class gmslModule
   {
      float val = 2*r + 2*gmsl_raw[min(curYearIndex, 50)*12+i]/4;
      //fill(color(180, 180, i*10+50));
-     arc(0, 0, val, val, i * 2*PI/12 - PI/2, (i+1) * 2*PI/12 - PI/2);
+     arc(0, 0, val * 2 - 200, val * 2 - 200, i * 2*PI/12 - PI/2 + .01, (i+1) * 2*PI/12 - PI/2 - .01);
   }
+  
+    fill(color(40));
+    noStroke();
+    text(gmsl[min(curYearIndex, 50)] + " mm global annual average sea level", r+50, 20);
  }
 }
 
@@ -231,6 +198,7 @@ void setup()
   co2 = new co2RegModule();
   ppm = new ppmModule();
   tempViz = new TemperatureVisualizer();
+  fuelViz = new FuelConsumptionVisualizer();
   
   controlP5 = new ControlP5(this);
   s = controlP5.addSlider("sliderVal",1950,2049,100,height-100,width-200,10);
@@ -334,40 +302,89 @@ void draw()
   
   // GMSL  
   pushMatrix();
-  translate(width/2, height/2);
-  gm.display(r);
+  translate(width/4, height/4);
+  gm.display(100);
+  fill(color(255));
+  ellipse(0, 0, 200, 200);
   popMatrix();
   
 
   // PLANET
   pushMatrix();
-  translate(width/2, height/2);
+  translate(2*width/4, 2*height/4);
   strokeWeight(2);
   stroke(color(40));
   fill(color(240));
   ellipse(0, 0, 2*r, 2*r);
+  noStroke();
+  fill(40);
+  text(space_sqm + " square meters of land mass per person", r+50, 0);
   popMatrix();
   
   
+  pushMatrix();
+  translate(width/4, height/4);
+  
+  fill(color(10));
+  ellipse(0, 0, 200, 200);
+  
+
+  
+  popMatrix();
   
   // TEMP
   tempViz.setYear(min(sliderVal, 2010));
   pushMatrix();
-  translate(width/2, height/2);
-  scale(2.0f);
+  translate(width/4, height/4);
+
   tempViz.display();
   popMatrix();
   
+  
   noStroke();
   noFill();
+ 
+  
   colorMode(RGB, 255);
   
+  pushMatrix();
+  
+  translate(width/4, height/4);
+  pushMatrix();
+  scale(.95f);
+  String mon[] = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
+  for(int i = 0; i < 12; i++)
+  {
+     pushMatrix();
+     scale(.95f);
+     rotate((i-2) * PI/6.0f - PI/12.0f);
+     translate(100, 0);
+     rotate(PI/2);
+     translate(-10,0);
+     
+   //  translate(50, 0);
+     
+     fill(color(255));
+     text(mon[i], 0, 0);
+     popMatrix();
+  }
+  popMatrix();
+  popMatrix();
+  
+  /*
+  // FUEL
+  fuelViz.setYear(sliderVal);
+  pushMatrix();
+  translate(width/2, 100);
+  fuelViz.display();
+  popMatrix();
+  */
   
   // ATMOSPHERE PPM
   
   pushMatrix();
-  translate(width/2, height/2);
-  displayAtmos(r);
+  translate(width/4, height/4);
+  displayAtmos(100);
   popMatrix();
  
   
@@ -383,12 +400,13 @@ void draw()
      
      float rc = sqrt(co2.data[i][min(ind, 37)]/PI);
   }
+
   
   
   
   // CIRCLE PACKING
   pushMatrix();
-  translate(0, 0);
+  translate(width/4, height/4);
   for (int i=0; i<circles.size(); i++) {
     ((Circle)circles.get(i)).draw();
     fill(color(30));
