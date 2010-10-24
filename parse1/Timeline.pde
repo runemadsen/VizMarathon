@@ -33,8 +33,9 @@ class TimeBar
     fill(#2d2d2d);
     rect(curX, -30, 85, 40);
     
+    textFont(font, 20);
     fill(255);
-    text(curYear, curX + 9, 0);
+    text(curYear, curX + 15, 0);
     
     popMatrix();
   }

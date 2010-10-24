@@ -94,7 +94,6 @@ class co2RegModule
        }
        //println();
     }
-  
   }
 }
 
@@ -123,8 +122,6 @@ void displayAtmos(float r)
   noStroke();
   
   text(350.0f + " boundary CO2 parts per million.", cos(PI/3.5f) * 1.3 *(r + 350.0f/4.0f), - sin(PI/3.5f) * 1.3 * (r + 350.0f/4.0f));
-  
-  
 }
 
 class gmslModule
@@ -206,7 +203,7 @@ void setup()
   textFont(silk8);
   
   bar = new TimeBar();
-  bar.setLocation(0, 800);
+  bar.setLocation(0, 850);
   
   h = new Habitat();
   
@@ -219,11 +216,10 @@ void setup()
   
   active = "roads";
   int xoff = 150;
-  roads = new PVector(xoff, height/5);
+  roads = new PVector(135, height / 8);
   seatemp = new PVector(xoff, 2*height/5);
-  habitat = new PVector(xoff, 3*height/5);
+  habitat = new PVector(95, 3*height/5);
   planet = new PVector(xoff, 4*height/5);
-  
   
  // controlP5 = new ControlP5(this);
  // s = controlP5.addSlider("sliderVal",1950,2049,100,height-100,width-200,10);
@@ -297,7 +293,6 @@ ArrayList createPackC()
   
   //colorMode(RGB,255);
   return circles;
- 
 }
 
 void draw()
@@ -306,27 +301,34 @@ void draw()
   
   textFont(silk8);
   
-  background(255);
+  background(#f9f5ef);
   
-  animationCounter -= 50.0f;
+  animationCounter -= 150.0f;
   if(animationCounter <= 0) animationCounter = .0f;
   
    PVector cent = new PVector(width/2, height/2);
     
   pushMatrix();
-   if(active.equals("habitat") && animationCounter == .0f){
+  if(active.equals("habitat") && animationCounter == .0f)
+  {
     translate(width/2, height/2);
-  } else if (!active.equals("habitat") && animationCounter == .0f || !lastactive.equals("habitat") && !active.equals("habitat") && animationCounter > .0f){
+  } 
+  else if (!active.equals("habitat") && animationCounter == .0f || !lastactive.equals("habitat") && !active.equals("habitat") && animationCounter > .0f)
+  {
     translate(habitat.x, habitat.y);
-    scale(.25f);
-  } else if (lastactive.equals("habitat") && !active.equals("habitat") && animationCounter > .0f) {
+    scale(.45f);
+  } 
+  else if (lastactive.equals("habitat") && !active.equals("habitat") && animationCounter > .0f) 
+  {
     PVector v = PVector.add(habitat, (PVector.mult(PVector.sub(cent, habitat), animationCounter/float(ANIMAX))));
      translate( v.x, v.y );
-     scale( map(animationCounter, 0, ANIMAX, .25f, 1.0f));
-  } else if (active.equals("habitat") && animationCounter > .0f){
+     scale( map(animationCounter, 0, ANIMAX, .45f, 1.0f));
+  } 
+  else if (active.equals("habitat") && animationCounter > .0f)
+  {
       PVector v = PVector.add(cent, (PVector.mult(PVector.sub(habitat, cent), animationCounter/float(ANIMAX))));
      translate( v.x, v.y );
-     scale( map(animationCounter, 0, ANIMAX, 1.0f, 0.25f));
+     scale( map(animationCounter, 0, ANIMAX, 1.0f, 0.45f));
   }
   h.setYear(sliderVal);
   h.display();
@@ -343,19 +345,26 @@ void draw()
  
   // ROADS
   pushMatrix();
-  if(active.equals("roads") && animationCounter == .0f){
+  if(active.equals("roads") && animationCounter == .0f)
+  {
     translate(width/2, height/2);
-  } else if (!active.equals("roads") && animationCounter == .0f || !lastactive.equals("roads") && !active.equals("roads") && animationCounter > .0f){
+  } 
+  else if (!active.equals("roads") && animationCounter == .0f || !lastactive.equals("roads") && !active.equals("roads") && animationCounter > .0f)
+  {
     translate(roads.x, roads.y);
-    scale(.25f);
-  } else if (lastactive.equals("roads") && !active.equals("roads") && animationCounter > .0f) {
+    scale(.35f);
+  } 
+  else if (lastactive.equals("roads") && !active.equals("roads") && animationCounter > .0f) 
+  {
     PVector v = PVector.add(roads, (PVector.mult(PVector.sub(cent, roads), animationCounter/float(ANIMAX))));
      translate( v.x, v.y );
-     scale( map(animationCounter, 0, ANIMAX, .25f, 1.0f));
-  } else if (active.equals("roads") && animationCounter > .0f){
+     scale( map(animationCounter, 0, ANIMAX, .35f, 1.0f));
+  } 
+  else if (active.equals("roads") && animationCounter > .0f)
+  {
       PVector v = PVector.add(cent, (PVector.mult(PVector.sub(roads, cent), animationCounter/float(ANIMAX))));
      translate( v.x, v.y );
-     scale( map(animationCounter, 0, ANIMAX, 1.0f, 0.25f));
+     scale( map(animationCounter, 0, ANIMAX, 1.0f, 0.35f));
   }
   roadSys.setYear(sliderVal);
   roadSys.display();
@@ -363,19 +372,31 @@ void draw()
   
   
   pushMatrix();
-   if(active.equals("planet") && animationCounter == .0f){
+  
+  // active
+  if(active.equals("planet") && animationCounter == .0f)
+  {
     translate(width/2, height/2);
-  } else if (!active.equals("planet") && animationCounter == .0f || !lastactive.equals("planet") && !active.equals("planet") && animationCounter > .0f){
+  } 
+  // not active
+  else if (!active.equals("planet") && animationCounter == .0f || !lastactive.equals("planet") && !active.equals("planet") && animationCounter > .0f)
+  {
     translate(planet.x, planet.y);
-    scale(.25f);
-  } else if (lastactive.equals("planet") && !active.equals("planet") && animationCounter > .0f) {
+    scale(.50f);
+  } 
+  // shrinking
+  else if (lastactive.equals("planet") && !active.equals("planet") && animationCounter > .0f) 
+  {
     PVector v = PVector.add(planet, (PVector.mult(PVector.sub(cent, planet), animationCounter/float(ANIMAX))));
      translate( v.x, v.y );
-     scale( map(animationCounter, 0, ANIMAX, .25f, 1.0f));
-  } else if (active.equals("planet") && animationCounter > .0f){
+     scale( map(animationCounter, 0, ANIMAX, .50f, 1.0f));
+  } 
+  // growing
+  else if (active.equals("planet") && animationCounter > .0f)
+  {
       PVector v = PVector.add(cent, (PVector.mult(PVector.sub(planet, cent), animationCounter/float(ANIMAX))));
      translate( v.x, v.y );
-     scale( map(animationCounter, 0, ANIMAX, 1.0f, 0.25f));
+     scale( map(animationCounter, 0, ANIMAX, 1.0f, 0.50f));
   }
   // PLANET
   
@@ -408,19 +429,26 @@ void draw()
    
   pushMatrix();
   
- if(active.equals("seatemp") && animationCounter == .0f){
+ if(active.equals("seatemp") && animationCounter == .0f)
+ {
     translate(width/2, height/2);
-  } else if (!active.equals("seatemp") && animationCounter == .0f  || !lastactive.equals("seatemp") && !active.equals("seatemp") && animationCounter > .0f){
+  } 
+  else if (!active.equals("seatemp") && animationCounter == .0f  || !lastactive.equals("seatemp") && !active.equals("seatemp") && animationCounter > .0f)
+  {
     translate(seatemp.x, seatemp.y);
-    scale(.25f);
-  } else if (lastactive.equals("seatemp") && !active.equals("seatemp") && animationCounter > .0f) {
-    PVector v = PVector.add(seatemp, (PVector.mult(PVector.sub(cent, seatemp), animationCounter/float(ANIMAX))));
+    scale(.45f);
+  } 
+  else if (lastactive.equals("seatemp") && !active.equals("seatemp") && animationCounter > .0f) 
+  {
+     PVector v = PVector.add(seatemp, (PVector.mult(PVector.sub(cent, seatemp), animationCounter/float(ANIMAX))));
      translate( v.x, v.y );
-     scale( map(animationCounter, 0, ANIMAX, .25f, 1.0f));
-  } else if (active.equals("seatemp") && animationCounter > .0f){
+     scale( map(animationCounter, 0, ANIMAX, .45f, 1.0f));
+  } 
+  else if (active.equals("seatemp") && animationCounter > .0f)
+  {
       PVector v = PVector.add(cent, (PVector.mult(PVector.sub(seatemp, cent), animationCounter/float(ANIMAX))));
      translate( v.x, v.y );
-     scale( map(animationCounter, 0, ANIMAX, 1.0f, 0.25f));
+     scale( map(animationCounter, 0, ANIMAX, 1.0f, 0.45f));
   }
   
  
