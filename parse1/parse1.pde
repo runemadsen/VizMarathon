@@ -172,7 +172,7 @@ class gmslModule
  public void display(float r)
  {
    // GMSL
-  stroke(color(255));
+  stroke(color(90, 90, 255));
   strokeWeight(2);
   
   fill(color(180, 180, 220));
@@ -429,6 +429,7 @@ void draw()
    
   pushMatrix();
   
+  
  if(active.equals("seatemp") && animationCounter == .0f)
  {
     translate(width/2, height/2);
@@ -452,6 +453,8 @@ void draw()
   }
   
  
+  scale(1.5f);
+  
   gm.display(100);
   fill(color(255));
   ellipse(0, 0, 200, 200);
