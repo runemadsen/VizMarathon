@@ -30,14 +30,14 @@ final float EARTH_SUR = 148940000.0f;
 
 PFont silk8;
 
-ArrayList circles;
+ArrayList circless;
 long iterationCounter = 0;
 
 TimeBar bar;
 
 PVector seatemp, planet, roads, habitat, stats;
 float animationCounter = .0f;
-String active = "a";
+String active = "a", lastactive = "a";
 
 class ppmModule
 {
@@ -263,7 +263,7 @@ void setup()
      */
   }
   
- circles = createPackC(); 
+ circless = createPackC(); 
 }
 
 void update()
@@ -277,6 +277,7 @@ void update()
 
 ArrayList createPackC()
 {
+  println("PACK");
   ArrayList circles = new ArrayList();
   //colorMode(HSB, 255);
   
@@ -288,19 +289,10 @@ ArrayList createPackC()
      
      float rc = sqrt(co2.data[i][min(ind, 37)]/PI);
      
-     Circle c = new Circle(width/2+100 * cos(i * 2*PI/co2.data.length), height/2-100*sin(i * 2*PI/co2.data.length),  rc, sqrt(co2.dataoil[i][min(ind, 37)]/PI));
+     Circle c = new Circle(width/2 + 100 * cos(i * 2*PI/co2.data.length), height/2-100*sin(i * 2*PI/co2.data.length),  rc, sqrt(co2.dataoil[i][min(ind, 37)]/PI));
      c.myColor = color(200, 200, 100);
      circles.add(c);
     
-    /*
-    pushMatrix();
-    translate(width/2 + r * cos(i * 2*PI/co2.data.length), height/2-r*sin(i * 2*PI/co2.data.length));
-    fill(color(200, 200, 50));
-    ellipse(0, 0, 1 * rc * 2,  1 * rc * 2);
-    fill(color(30));
-    text(co2.regions[i], 0, 0); 
-    popMatrix();
-    */
   }
   
   //colorMode(RGB,255);
@@ -318,10 +310,27 @@ void draw()
   
   animationCounter -= 50.0f;
   if(animationCounter <= 0) animationCounter = .0f;
-    
   
+   PVector cent = new PVector(width/2, height/2);
+    
+  pushMatrix();
+   if(active.equals("habitat") && animationCounter == .0f){
+    translate(width/2, height/2);
+  } else if (!active.equals("habitat") && animationCounter == .0f || !lastactive.equals("habitat") && !active.equals("habitat") && animationCounter > .0f){
+    translate(habitat.x, habitat.y);
+    scale(.25f);
+  } else if (lastactive.equals("habitat") && !active.equals("habitat") && animationCounter > .0f) {
+    PVector v = PVector.add(habitat, (PVector.mult(PVector.sub(cent, habitat), animationCounter/float(ANIMAX))));
+     translate( v.x, v.y );
+     scale( map(animationCounter, 0, ANIMAX, .25f, 1.0f));
+  } else if (active.equals("habitat") && animationCounter > .0f){
+      PVector v = PVector.add(cent, (PVector.mult(PVector.sub(habitat, cent), animationCounter/float(ANIMAX))));
+     translate( v.x, v.y );
+     scale( map(animationCounter, 0, ANIMAX, 1.0f, 0.25f));
+  }
   h.setYear(sliderVal);
   h.display();
+  popMatrix();
   
  // noStroke();
   
@@ -330,16 +339,16 @@ void draw()
   float r = sqrt(space_sqm/PI);
  // println(r);
  
- PVector cent = new PVector(width/2, height/2);
+
  
   // ROADS
   pushMatrix();
   if(active.equals("roads") && animationCounter == .0f){
     translate(width/2, height/2);
-  } else if (!active.equals("roads") && animationCounter == .0f){
+  } else if (!active.equals("roads") && animationCounter == .0f || !lastactive.equals("roads") && !active.equals("roads") && animationCounter > .0f){
     translate(roads.x, roads.y);
     scale(.25f);
-  } else if (!active.equals("roads") && animationCounter > .0f) {
+  } else if (lastactive.equals("roads") && !active.equals("roads") && animationCounter > .0f) {
     PVector v = PVector.add(roads, (PVector.mult(PVector.sub(cent, roads), animationCounter/float(ANIMAX))));
      translate( v.x, v.y );
      scale( map(animationCounter, 0, ANIMAX, .25f, 1.0f));
@@ -354,12 +363,19 @@ void draw()
   
   
   pushMatrix();
-  if(active.equals("planet") && animationCounter == .0f)
-  {
+   if(active.equals("planet") && animationCounter == .0f){
     translate(width/2, height/2);
-  } else if(animationCounter == .0f){
+  } else if (!active.equals("planet") && animationCounter == .0f || !lastactive.equals("planet") && !active.equals("planet") && animationCounter > .0f){
     translate(planet.x, planet.y);
     scale(.25f);
+  } else if (lastactive.equals("planet") && !active.equals("planet") && animationCounter > .0f) {
+    PVector v = PVector.add(planet, (PVector.mult(PVector.sub(cent, planet), animationCounter/float(ANIMAX))));
+     translate( v.x, v.y );
+     scale( map(animationCounter, 0, ANIMAX, .25f, 1.0f));
+  } else if (active.equals("planet") && animationCounter > .0f){
+      PVector v = PVector.add(cent, (PVector.mult(PVector.sub(planet, cent), animationCounter/float(ANIMAX))));
+     translate( v.x, v.y );
+     scale( map(animationCounter, 0, ANIMAX, 1.0f, 0.25f));
   }
   // PLANET
   
@@ -370,22 +386,49 @@ void draw()
   noStroke();
   fill(40);
   text(space_sqm + " square meters of land mass per person (1 pixel = 1 square meter)", r+50, 0);
+  
+  
+    // CIRCLE PACKING
+  pushMatrix();
+  translate(-width/2, -height/2);
+  for (int i=0; i<circless.size(); i++) {
+    ((Circle)circless.get(i)).draw();
+    fill(color(30));
+    text(co2.regions[i], ((Circle)circless.get(i)).x, ((Circle)circless.get(i)).y); 
+  } 
+  for (int i=1; i<50; i++) {
+    iterateLayout(i);
+  }
+  popMatrix();
+  
   popMatrix();
   
   
    // GMSL  
+   
   pushMatrix();
-  scale(1.5);
-  pushMatrix();
-  translate(width/4, height/4);
+  
+ if(active.equals("seatemp") && animationCounter == .0f){
+    translate(width/2, height/2);
+  } else if (!active.equals("seatemp") && animationCounter == .0f  || !lastactive.equals("seatemp") && !active.equals("seatemp") && animationCounter > .0f){
+    translate(seatemp.x, seatemp.y);
+    scale(.25f);
+  } else if (lastactive.equals("seatemp") && !active.equals("seatemp") && animationCounter > .0f) {
+    PVector v = PVector.add(seatemp, (PVector.mult(PVector.sub(cent, seatemp), animationCounter/float(ANIMAX))));
+     translate( v.x, v.y );
+     scale( map(animationCounter, 0, ANIMAX, .25f, 1.0f));
+  } else if (active.equals("seatemp") && animationCounter > .0f){
+      PVector v = PVector.add(cent, (PVector.mult(PVector.sub(seatemp, cent), animationCounter/float(ANIMAX))));
+     translate( v.x, v.y );
+     scale( map(animationCounter, 0, ANIMAX, 1.0f, 0.25f));
+  }
+  
+ 
   gm.display(100);
   fill(color(255));
   ellipse(0, 0, 200, 200);
-  popMatrix();
-  
-  
+
   pushMatrix();
-  translate(width/4, height/4);
   
   fill(color(10));
   ellipse(0, 0, 200, 200);
@@ -394,7 +437,6 @@ void draw()
   // TEMP
   tempViz.setYear(min(sliderVal, 2010));
   pushMatrix();
-  translate(width/4, height/4);
 
   tempViz.display();
   popMatrix();
@@ -405,8 +447,6 @@ void draw()
   colorMode(RGB, 255);
   
   pushMatrix();
-  
-  translate(width/4, height/4);
   pushMatrix();
   scale(.95f);
   String mon[] = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
@@ -428,18 +468,14 @@ void draw()
   popMatrix();
   popMatrix();
   
-  
- 
- 
-  // ATMOSPHERE PPM
+    // ATMOSPHERE PPM
   
   pushMatrix();
-  translate(width/4, height/4);
   displayAtmos(100);
   popMatrix();
- 
-  popMatrix();
   
+   popMatrix();
+
   
   // FUEL
   fuelViz.setYear(sliderVal);
@@ -447,10 +483,6 @@ void draw()
   translate(width/2 + 50, 100);
   fuelViz.display(total[curYearIndex]);
   popMatrix();
-  
-  
-
- 
   
   float co2sum = .0f;
   
@@ -465,22 +497,6 @@ void draw()
      float rc = sqrt(co2.data[i][min(ind, 37)]/PI);
   }
 
-  
-  
-  
-  // CIRCLE PACKING
-  pushMatrix();
-  translate(width/4, height/4);
-  for (int i=0; i<circles.size(); i++) {
-    ((Circle)circles.get(i)).draw();
-    fill(color(30));
-    text(co2.regions[i], ((Circle)circles.get(i)).x, ((Circle)circles.get(i)).y); 
-  } 
-  for (int i=1; i<50; i++) {
-    iterateLayout(i);
-  }
-  popMatrix();
-  
   
   // PERSONAL PPM
   co2sum /= total[curYearIndex];
@@ -515,9 +531,9 @@ void mouseDragged()
 {
   println("Mouse moved");
   bar.checkDrag(); 
-  if(bar.dragging)
+  if(true || bar.dragging)
   {
-    createPackC();
+    circless = createPackC();
   }
 }
 
@@ -538,7 +554,7 @@ Comparator comp = new Comparator() {
 
 void iterateLayout(int iterationCounter) {
 
-  Object circs[] = circles.toArray();
+  Object circs[] = circless.toArray();
   Arrays.sort(circs, comp);
 
   //fix overlaps
@@ -586,11 +602,18 @@ void iterateLayout(int iterationCounter) {
 
 void keyPressed()
 {
+  lastactive = active;
    if(key == '1'){
       active = "roads";
       animationCounter = ANIMAX;
    } else if (key == '4'){
       active = "planet"; 
+      animationCounter = ANIMAX;
+   } else if (key == '2'){
+      active = "seatemp"; 
+      animationCounter = ANIMAX;
+   } else if (key == '3'){
+      active = "habitat"; 
       animationCounter = ANIMAX;
    }
    
