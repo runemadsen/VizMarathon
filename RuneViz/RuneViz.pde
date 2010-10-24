@@ -3,7 +3,8 @@ String[] countries;
 int years[];
 float data[][];
 int curYear = 1970;
-float diameter = 10; // size of 1 m2
+float diameter = 8; // size of 1 m2
+int gridWidth = 350;
 
 /*  Setup
 ___________________________________________________________ */
@@ -11,7 +12,7 @@ ___________________________________________________________ */
 void setup()
 {
   size(1024, 768);
-  background(255);
+  background(0);
   smooth();
   
   rows = loadStrings("oecd-forest-percent.csv");
@@ -40,8 +41,6 @@ void setup()
     data[i - 1][3] = float(columns[4]) / 1000;
     data[i - 1][4] = float(columns[5]) / 1000; 
   }
-  
-  rectMode(CENTER);
 }
 
 /*  Draw
@@ -50,27 +49,27 @@ ___________________________________________________________ */
 void draw()
 {
   float num = getNumber(curYear);
-  background(#7aa9c7);
+  background(255);
   
   pushMatrix();
   translate(100, 100);
   
   int curX = 0;
   int curY = 0;
-  int spacing = 2;
-  int gridWidth = 300;
+  int spacing = 3;
+  int maxY = 0;
   
   noStroke();
   fill(0, 0, 0);
   text("m2 per citizen: " + int(num), 0, -20);
   
-  strokeWeight(1);
-  stroke(#1f2e16);
-  fill(#a8b53c);
+  strokeWeight(2);
+  fill(#222222);
   
   for(int i = 0; i < num; i++)
   {
     rect(curX, curY, diameter, diameter);
+    //line(curX, curY, curX, curY + diameter);
      
     curX += diameter + spacing;
     
@@ -79,7 +78,25 @@ void draw()
       curX = 0;
       curY += diameter + spacing;
     }
+    
+    if(curY > maxY)
+    {
+       maxY = curY; 
+    }
   }
+  
+  /*for(int i = 0; i < gridWidth; i += 20)
+  {
+      if(i < curX)
+      {
+         line(i, 0, i, curY);
+         // draw full to curY
+      }
+      else
+      {
+         line(i, 0, i, curY - (diameter + spacing));
+      } 
+  }*/
  
   /*float r = 0.1;
   float theta = 0;
