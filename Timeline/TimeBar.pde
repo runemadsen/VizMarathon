@@ -50,10 +50,9 @@ class TimeBar
   
  void checkPress()
   {
-    if(mouseX > loc.x && mouseX < loc.x + 85 && mouseY > loc.y && mouseY < loc.y + 40)
+    if(mouseX > loc.x + curX && mouseX < loc.x + curX + 85 && mouseY > loc.y - 40 && mouseY < loc.y + 40)
     {
        dragging = true;
-       println("Dragging yeah");
     }
   }
   
@@ -64,15 +63,12 @@ class TimeBar
        curX = mouseX; 
        
        curYear = int(map(curX, loc.x, width - 90, 1970, 2010));
-       
-       println("Moving yeah");
     }
   }
   
   void stopDrag()
   {
     dragging = false; 
-    println("Stopped yeah");
   }
   
 }
