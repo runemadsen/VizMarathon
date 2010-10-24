@@ -1,6 +1,6 @@
 String rows[];
 String[] countries;
-String years[];
+int years[];
 float data[][];
 int curYear = 0;
 float diameter = 500;
@@ -14,6 +14,14 @@ void setup()
   rows = loadStrings("oecd-forest-percent.csv");
 
   //yr = new int[lines.length];
+  String tempyears[] = rows[0].split(",");
+  years = new int[tempyears.length - 1];
+
+  // remove first row
+  for(int i = 1; i < tempyears.length; i++)
+  {
+      years[i - 1] = int(tempyears[i]);
+  }
   
   //years = rows[0].split(",");
   countries = new String[rows.length - 1];
@@ -39,6 +47,7 @@ void draw()
 {
   background(255);
   
+  pushMatrix();
   translate(width / 2, height / 2);
   
   // draw 100 percent
@@ -52,6 +61,9 @@ void draw()
   noStroke();
   ellipse(0, 0, data[data.length - 1][curYear] * diameter, data[data.length - 1][curYear] * diameter);
   
+  popMatrix();
+  fill(0, 0, 0);
+  text("Current Year: " + years[curYear], 10, 20);
 }
 
 void mousePressed()
