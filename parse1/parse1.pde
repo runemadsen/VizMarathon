@@ -62,25 +62,29 @@ class co2RegModule
 "Latin America",
 "Asia without China",
 "China"};
-  public String lines[];
-  public float data[][];
+  public String lines[], linesoil[];
+  public float data[][], dataoil[][];
   
   public co2RegModule()
   {
     
     data = new float[10][38];
+    dataoil = new float[10][38];
   
     lines = loadStrings("co2region.txt");
+    linesoil = loadStrings("co2oil.txt");
   
     for(int i = 0; i < lines.length; i++)
     {
        String spl[] = lines[i].split("\t");
+       String sploil[] = linesoil[i].split("\t");
        for(int j = 0; j < spl.length; j++)
        {
           data[i][j] = float(spl[j]); 
-          print(data[i][j] + " _ ");
+          dataoil[i][j] = float(sploil[j]);
+         // print(data[i][j] + " _ ");
        }
-       println();
+       //println();
     }
   
   }
@@ -163,7 +167,8 @@ class gmslModule
  public void display(float r)
  {
    // GMSL
-  noStroke();
+  stroke(color(255));
+  strokeWeight(2);
   
   fill(color(180, 180, 220));
   float d = 2*r + 2*gmsl[min(curYearIndex, 50)]/4;
@@ -263,7 +268,7 @@ ArrayList createPackC()
      
      float rc = sqrt(co2.data[i][min(ind, 37)]/PI);
      
-     Circle c = new Circle(width/2+100 * cos(i * 2*PI/co2.data.length), height/2-100*sin(i * 2*PI/co2.data.length),  rc);
+     Circle c = new Circle(width/2+100 * cos(i * 2*PI/co2.data.length), height/2-100*sin(i * 2*PI/co2.data.length),  rc, sqrt(co2.dataoil[i][min(ind, 37)]/PI));
      c.myColor = color(200, 200, 100);
      circles.add(c);
     
@@ -318,7 +323,7 @@ void draw()
   ellipse(0, 0, 2*r, 2*r);
   noStroke();
   fill(40);
-  text(space_sqm + " square meters of land mass per person", r+50, 0);
+  text(space_sqm + " square meters of land mass per person (1 pixel = 1 square meter)", r+50, 0);
   popMatrix();
   
   
@@ -503,17 +508,7 @@ void iterateLayout(int iterationCounter) {
   }
 }
 
-ArrayList createRandomCircles(int n) {
-  ArrayList circles = new ArrayList();
-  colorMode(HSB, 255);
-  while (n-- > 0) {
-    Circle c = new Circle(random(width), random(height), random(n)+10);
-    c.myColor = color(random(255), 128, 200, 128);
-    circles.add(c);
-  }
-  colorMode(RGB,255);
-  return circles;
-}
+
 
 void controlEvent(ControlEvent theEvent) {
   switch(theEvent.controller().id()) {
