@@ -2,7 +2,6 @@ import controlP5.*;
 
 ControlP5 controlP5;
 Slider s;
-Habitat h;
 
 String lines[];
 int yr[];
@@ -167,14 +166,12 @@ void setup()
 {
   ellipseMode(CENTER);
   rectMode(CENTER);
-  size(1440, 900);
+  size(1024, 768);
   background(255);
   smooth();
   
   silk8 = loadFont("Silkscreen-8.vlw"); 
   textFont(silk8);
-  
-  h = new Habitat();
   
   gm = new gmslModule();
   co2 = new co2RegModule();
@@ -268,12 +265,7 @@ void draw()
 {
   update();
   
-  
-  
   background(255);
-  
-  h.setYear(sliderVal);
-  h.display();
   
  // noStroke();
   
@@ -296,26 +288,12 @@ void draw()
      arc(width/2, height/2, val, val, i * 2*PI/12 - PI/2, (i+1) * 2*PI/12 - PI/2);
   }
   
-  
-  
 
   // PLANET
   strokeWeight(2);
   stroke(color(40));
   fill(color(240));
   ellipse(width/2, height/2, 2*r, 2*r);
-  
-  // TEMP
-  tempViz.setYear(min(sliderVal, 2010));
-  pushMatrix();
-  translate(width/2, height/2);
-  scale(2.0f);
-  tempViz.display();
-  popMatrix();
-  
-  noStroke();
-  noFill();
-  colorMode(RGB, 255);
   
   // ATMOSPHERE PPM
   
@@ -397,8 +375,11 @@ void draw()
   text(("" + co2sum/10.0f + " tons personal co2 emission "), 30, -co2sum);
   popMatrix();
   
-  
-  
+  tempViz.setYear(sliderVal);
+  pushMatrix();
+  translate(width/2, height/2);
+  popMatrix();
+  tempViz.display();
  
   
 }
