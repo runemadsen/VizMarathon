@@ -304,6 +304,8 @@ void draw()
   float r = sqrt(space_sqm/PI);
  // println(r);
   
+  pushMatrix();
+  scale(1.5);
   
   // GMSL  
   pushMatrix();
@@ -376,21 +378,26 @@ void draw()
   popMatrix();
   popMatrix();
   
-  /*
-  // FUEL
-  fuelViz.setYear(sliderVal);
-  pushMatrix();
-  translate(width/2, 100);
-  fuelViz.display();
-  popMatrix();
-  */
   
-  // ATMOSPHERE PPM
+    // ATMOSPHERE PPM
   
   pushMatrix();
   translate(width/4, height/4);
   displayAtmos(100);
   popMatrix();
+ 
+  popMatrix();
+  
+  
+  // FUEL
+  fuelViz.setYear(sliderVal);
+  pushMatrix();
+  translate(width/2 + 50, 100);
+  fuelViz.display(total[curYearIndex]);
+  popMatrix();
+  
+  
+
  
   
   float co2sum = .0f;
