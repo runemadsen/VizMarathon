@@ -47,7 +47,7 @@ public class TemperatureVisualizer extends AbstractVisualizer
 
     for(int i = 0; i < 12; i++)
     {
-      println(i + ": " + thisYear[i]);
+      //println(i + ": " + thisYear[i]);
       if (thisYear[i] == 0.0) continue;
       float val = d + thisYear[i];
       fill(20, 255, 255);

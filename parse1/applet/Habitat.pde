@@ -51,10 +51,10 @@ class Habitat extends AbstractVisualizer
   void display()
   {
     float num = getNumber(curYear);
-   // background(255);
+    background(255);
     
     pushMatrix();
-    translate(-50, -50);
+    translate(100, 100);
     
     int curX = 0;
     int curY = 0;
