@@ -13,9 +13,39 @@ int sliderVal = 1950;
 int curYearIndex = 0;
 
 gmslModule gm;
+co2RegModule co2;
 
 // in sqkm
 final float EARTH_SUR = 148940000.0f;
+
+// ct 37
+class co2RegModule
+{
+  
+  
+  public String lines[];
+  public float data[][];
+  
+  public co2RegModule()
+  {
+    
+    data = new float[10][38];
+  
+    lines = loadStrings("co2region.txt");
+  
+    for(int i = 0; i < lines.length; i++)
+    {
+       String spl[] = lines[i].split("\t");
+       for(int j = 0; j < spl.length; j++)
+       {
+          data[i][j] = float(spl[j]); 
+          print(data[i][j] + " _ ");
+       }
+       println();
+    }
+  
+  }
+}
 
 class gmslModule
 {
@@ -66,6 +96,7 @@ void setup()
   smooth();
   
   gm = new gmslModule();
+  co2 = new co2RegModule();
   
   controlP5 = new ControlP5(this);
   s = controlP5.addSlider("sliderVal",1950,2049,100,height-100,width-200,10);
@@ -134,7 +165,14 @@ void draw()
   ellipse(width/2, height/2, 2*r, 2*r);
   
 
-  
+  fill(color(200, 200, 50));
+  for(int i = 0; i < co2.data.length; i++)
+  {
+    int ind = 0;
+    if(sliderVal >= 1971)
+      ind = sliderVal - 1971;
+    ellipse(width/2 + r * cos(i * 2*PI/co2.data.length), height/2-r*sin(i * 2*PI/co2.data.length), .02 * co2.data[i][min(ind, 37)],  .02 * co2.data[i][min(ind, 37)]);
+  }
  
   
 }
