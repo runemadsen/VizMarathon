@@ -20,6 +20,7 @@ co2RegModule co2;
 ppmModule ppm;
 
 TemperatureVisualizer tempViz;
+FuelConsumptionVisualizer fuelViz;
 
 // in sqkm
 final float EARTH_SUR = 148940000.0f;
@@ -171,8 +172,12 @@ class gmslModule
   {
      float val = 2*r + 2*gmsl_raw[min(curYearIndex, 50)*12+i]/4;
      //fill(color(180, 180, i*10+50));
-     arc(0, 0, val, val, i * 2*PI/12 - PI/2, (i+1) * 2*PI/12 - PI/2);
+     arc(0, 0, val * 2 - 200, val * 2 - 200, i * 2*PI/12 - PI/2 + .01, (i+1) * 2*PI/12 - PI/2 - .01);
   }
+  
+    fill(color(40));
+    noStroke();
+    text(gmsl[min(curYearIndex, 50)] + " mm global annual average sea level", r+50, 20);
  }
 }
 
@@ -193,6 +198,7 @@ void setup()
   co2 = new co2RegModule();
   ppm = new ppmModule();
   tempViz = new TemperatureVisualizer();
+  fuelViz = new FuelConsumptionVisualizer();
   
   controlP5 = new ControlP5(this);
   s = controlP5.addSlider("sliderVal",1950,2049,100,height-100,width-200,10);
@@ -297,39 +303,88 @@ void draw()
   // GMSL  
   pushMatrix();
   translate(width/4, height/4);
-  gm.display(r);
+  gm.display(100);
+  fill(color(255));
+  ellipse(0, 0, 200, 200);
   popMatrix();
   
 
   // PLANET
   pushMatrix();
-  translate(width/4, height/4);
+  translate(2*width/4, 2*height/4);
   strokeWeight(2);
   stroke(color(40));
   fill(color(240));
   ellipse(0, 0, 2*r, 2*r);
+  noStroke();
+  fill(40);
+  text(space_sqm + " square meters of land mass per person", r+50, 0);
   popMatrix();
   
   
+  pushMatrix();
+  translate(width/4, height/4);
+  
+  fill(color(10));
+  ellipse(0, 0, 200, 200);
+  
+
+  
+  popMatrix();
   
   // TEMP
   tempViz.setYear(min(sliderVal, 2010));
   pushMatrix();
   translate(width/4, height/4);
-  scale(2.0f);
+
   tempViz.display();
   popMatrix();
   
+  
   noStroke();
   noFill();
+ 
+  
   colorMode(RGB, 255);
   
+  pushMatrix();
+  
+  translate(width/4, height/4);
+  pushMatrix();
+  scale(.95f);
+  String mon[] = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
+  for(int i = 0; i < 12; i++)
+  {
+     pushMatrix();
+     scale(.95f);
+     rotate((i-2) * PI/6.0f - PI/12.0f);
+     translate(100, 0);
+     rotate(PI/2);
+     translate(-10,0);
+     
+   //  translate(50, 0);
+     
+     fill(color(255));
+     text(mon[i], 0, 0);
+     popMatrix();
+  }
+  popMatrix();
+  popMatrix();
+  
+  /*
+  // FUEL
+  fuelViz.setYear(sliderVal);
+  pushMatrix();
+  translate(width/2, 100);
+  fuelViz.display();
+  popMatrix();
+  */
   
   // ATMOSPHERE PPM
   
   pushMatrix();
-  translate(3*width/4, 3*height/4);
-  displayAtmos(r);
+  translate(width/4, height/4);
+  displayAtmos(100);
   popMatrix();
  
   
