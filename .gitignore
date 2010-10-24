@@ -1,0 +1,14 @@
+.metadata
+.project
+.classpath
+.settings
+bin
+
+
+tmp/** 
+.DS_Store 
+*.tmp 
+*.bak 
+tmp/**/* 
+*.swp 
+*~.nib 

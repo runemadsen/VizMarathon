@@ -12,15 +12,91 @@ int sliderVal = 1950;
 
 int curYearIndex = 0;
 
+gmslModule gm;
+co2RegModule co2;
+
 // in sqkm
 final float EARTH_SUR = 148940000.0f;
+
+// ct 37
+class co2RegModule
+{
+  
+  
+  public String lines[];
+  public float data[][];
+  
+  public co2RegModule()
+  {
+    
+    data = new float[10][38];
+  
+    lines = loadStrings("co2region.txt");
+  
+    for(int i = 0; i < lines.length; i++)
+    {
+       String spl[] = lines[i].split("\t");
+       for(int j = 0; j < spl.length; j++)
+       {
+          data[i][j] = float(spl[j]); 
+          print(data[i][j] + " _ ");
+       }
+       println();
+    }
+  
+  }
+}
+
+class gmslModule
+{
+  String lines[];
+  int yr_raw[], yr[];
+  public float gmsl_raw[], gmsl[];
+  
+  public gmslModule()
+  {
+    lines = loadStrings("gmsl.txt");
+    
+    yr_raw = new int[lines.length];
+    gmsl_raw = new float[lines.length];
+    yr = new int[lines.length/12];
+    gmsl = new float[lines.length/12];
+    
+    for(int i = 0; i < lines.length; i++)
+    {
+      String spl[] = lines[i].split("\t");
+    
+      yr_raw[i] = int(spl[0].substring(4));
+      gmsl_raw[i] = float(spl[1]);
+    //  println(i + " " + yr_raw[i] + "/" + gmsl_raw[i]);
+    }
+    
+    
+    for(int i = 0; i < lines.length/12; i++)
+    {
+       float sum = .0f;
+       for(int j = i*12; j<i*12+12; j++)
+       {
+         sum += gmsl_raw[j];
+       }
+       
+       float avg = sum/12.0f;
+       gmsl[i] = avg;
+      // println(avg);
+    }
+  } 
+}
 
 void setup()
 {
   ellipseMode(CENTER);
+  rectMode(CENTER);
   size(1024, 768);
   background(255);
   smooth();
+  
+  gm = new gmslModule();
+  co2 = new co2RegModule();
   
   controlP5 = new ControlP5(this);
   s = controlP5.addSlider("sliderVal",1950,2049,100,height-100,width-200,10);
@@ -44,7 +120,7 @@ void setup()
     plus[i] = float(spl[3]);
     rate[i] = float(spl[2]);
 
-    println(plus[i]);
+  //  println(plus[i]);
 
     /*
      noStroke();
@@ -74,21 +150,29 @@ void draw()
   
   background(255);
   
-  ellipseMode(CENTER);
-  
   noStroke();
-  fill(color(40));
+  
   
   float space_sqm = 1000000 * EARTH_SUR / total[curYearIndex];
   
   float r = sqrt(space_sqm/PI);
-  println(r);
+ // println(r);
   
+  fill(color(100, 100, 200));
+  ellipse(width/2, height/2, 2*r + 2*gm.gmsl[min(curYearIndex, 50)]/4, 2*r + 2*gm.gmsl[min(curYearIndex, 50)]/4);
   // draw space in 200 sqm
+  fill(color(40));
   ellipse(width/2, height/2, 2*r, 2*r);
   
-  rectMode(CENTER);
-  
+
+  fill(color(200, 200, 50));
+  for(int i = 0; i < co2.data.length; i++)
+  {
+    int ind = 0;
+    if(sliderVal >= 1971)
+      ind = sliderVal - 1971;
+    ellipse(width/2 + r * cos(i * 2*PI/co2.data.length), height/2-r*sin(i * 2*PI/co2.data.length), .02 * co2.data[i][min(ind, 37)],  .02 * co2.data[i][min(ind, 37)]);
+  }
  
   
 }
