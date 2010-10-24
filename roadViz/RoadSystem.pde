@@ -222,6 +222,33 @@ class RoadSystem {
     targetLength = roadLength[yearIndex] / 1000; // divide by 1000 for sanity TODO find the right amount
     targetHighwayLength = highwayLength[yearIndex] / 1000;
   }
+  
+  
+  void center(){
+
+     ArrayList<Road> allRoads = getAllRoads();
+    int minX;
+    int minY;
+    int maxX;
+    int maxY;
+    for(int i = 0; i < allRoads.size(); i++) {
+      Road tempRoad = allRoads.get(i);
+      if(tempRoad.x1 > maxX) {
+        maxX = tempRoad.x1;
+      }
+      if(tempRoad.x1 < minX) {
+        tempRoad.x1 = minX;
+      }
+      if(tempRoad.y1 > maxY) {
+        maxY = tempRoad.y1;
+      }
+      if(tempRoad.y1 < minY) {
+        tempRoad.y1 = minY;
+      }
+    }   
+    translate(maxX-minX, maxY-minY);
+
+  }
 
 
 
@@ -429,6 +456,8 @@ class Road {
   }
 
   void display() {
+   
+
     // Draw
     strokeWeight(thickness);
     if(isHighway) strokeWeight(thickness + 2); // highways are beefier
@@ -444,6 +473,7 @@ class Road {
     for(int i = 0; i < children.size(); i++) {
       children.get(i).display();
     }
+
   }
 }
 

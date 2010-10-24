@@ -20,6 +20,7 @@ co2RegModule co2;
 ppmModule ppm;
 
 TemperatureVisualizer tempViz;
+FuelConsumptionVisualizer fuelViz;
 
 // in sqkm
 final float EARTH_SUR = 148940000.0f;
@@ -28,44 +29,6 @@ PFont silk8;
 
 ArrayList circles;
 long iterationCounter = 0;
-
-class Circle {
-  public float x, y, radius;
-  public color myColor;
-  
-  public Circle(float x, float y, float radius) {
-    this.x = x;
-    this.y = y;
-    this.radius = radius;
-    myColor = color(64,64,64,64);
-  }
-  
-  public void draw() {
-    fill(myColor);
-    stroke(myColor);
-    strokeWeight(3);
-    ellipse((int)x, (int)y, (int)radius*2, (int)radius*2);
-  }
- 
- public boolean contains(float x, float y) {
-   float dx = this.x - x;
-   float dy = this.y - y;
-   return sqrt(dx*dx + dy*dy) <= radius;
- }
-  
-  public float distanceToCenter() {
-    float dx = x - WIDTH/2;
-    float dy = y - HEIGHT/2;
-    return (sqrt(dx*dx + dy*dy));
-  } 
-  
-  public boolean intersects(Circle c) {
-    float dx = c.x - x;
-    float dy = c.y - y;
-    float d = sqrt(dx*dx + dy*dy);
-    return d < radius || d < c.radius;
-  }
-}
 
 
 class ppmModule
@@ -99,25 +62,29 @@ class co2RegModule
 "Latin America",
 "Asia without China",
 "China"};
-  public String lines[];
-  public float data[][];
+  public String lines[], linesoil[];
+  public float data[][], dataoil[][];
   
   public co2RegModule()
   {
     
     data = new float[10][38];
+    dataoil = new float[10][38];
   
     lines = loadStrings("co2region.txt");
+    linesoil = loadStrings("co2oil.txt");
   
     for(int i = 0; i < lines.length; i++)
     {
        String spl[] = lines[i].split("\t");
+       String sploil[] = linesoil[i].split("\t");
        for(int j = 0; j < spl.length; j++)
        {
           data[i][j] = float(spl[j]); 
-          print(data[i][j] + " _ ");
+          dataoil[i][j] = float(sploil[j]);
+         // print(data[i][j] + " _ ");
        }
-       println();
+       //println();
     }
   
   }
@@ -200,7 +167,8 @@ class gmslModule
  public void display(float r)
  {
    // GMSL
-  noStroke();
+  stroke(color(255));
+  strokeWeight(2);
   
   fill(color(180, 180, 220));
   float d = 2*r + 2*gmsl[min(curYearIndex, 50)]/4;
@@ -209,8 +177,12 @@ class gmslModule
   {
      float val = 2*r + 2*gmsl_raw[min(curYearIndex, 50)*12+i]/4;
      //fill(color(180, 180, i*10+50));
-     arc(0, 0, val, val, i * 2*PI/12 - PI/2, (i+1) * 2*PI/12 - PI/2);
+     arc(0, 0, val * 2 - 200, val * 2 - 200, i * 2*PI/12 - PI/2 + .01, (i+1) * 2*PI/12 - PI/2 - .01);
   }
+  
+    fill(color(40));
+    noStroke();
+    text(gmsl[min(curYearIndex, 50)] + " mm global annual average sea level", r+50, 20);
  }
 }
 
@@ -231,6 +203,7 @@ void setup()
   co2 = new co2RegModule();
   ppm = new ppmModule();
   tempViz = new TemperatureVisualizer();
+  fuelViz = new FuelConsumptionVisualizer();
   
   controlP5 = new ControlP5(this);
   s = controlP5.addSlider("sliderVal",1950,2049,100,height-100,width-200,10);
@@ -295,7 +268,7 @@ ArrayList createPackC()
      
      float rc = sqrt(co2.data[i][min(ind, 37)]/PI);
      
-     Circle c = new Circle(width/2+100 * cos(i * 2*PI/co2.data.length), height/2-100*sin(i * 2*PI/co2.data.length),  rc);
+     Circle c = new Circle(width/2+100 * cos(i * 2*PI/co2.data.length), height/2-100*sin(i * 2*PI/co2.data.length),  rc, sqrt(co2.dataoil[i][min(ind, 37)]/PI));
      c.myColor = color(200, 200, 100);
      circles.add(c);
     
@@ -334,40 +307,89 @@ void draw()
   
   // GMSL  
   pushMatrix();
-  translate(width/2, height/2);
-  gm.display(r);
+  translate(width/4, height/4);
+  gm.display(100);
+  fill(color(255));
+  ellipse(0, 0, 200, 200);
   popMatrix();
   
 
   // PLANET
   pushMatrix();
-  translate(width/2, height/2);
+  translate(2*width/4, 2*height/4);
   strokeWeight(2);
   stroke(color(40));
   fill(color(240));
   ellipse(0, 0, 2*r, 2*r);
+  noStroke();
+  fill(40);
+  text(space_sqm + " square meters of land mass per person (1 pixel = 1 square meter)", r+50, 0);
   popMatrix();
   
   
+  pushMatrix();
+  translate(width/4, height/4);
+  
+  fill(color(10));
+  ellipse(0, 0, 200, 200);
+  
+
+  
+  popMatrix();
   
   // TEMP
   tempViz.setYear(min(sliderVal, 2010));
   pushMatrix();
-  translate(width/2, height/2);
-  scale(2.0f);
+  translate(width/4, height/4);
+
   tempViz.display();
   popMatrix();
   
+  
   noStroke();
   noFill();
+ 
+  
   colorMode(RGB, 255);
   
+  pushMatrix();
+  
+  translate(width/4, height/4);
+  pushMatrix();
+  scale(.95f);
+  String mon[] = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
+  for(int i = 0; i < 12; i++)
+  {
+     pushMatrix();
+     scale(.95f);
+     rotate((i-2) * PI/6.0f - PI/12.0f);
+     translate(100, 0);
+     rotate(PI/2);
+     translate(-10,0);
+     
+   //  translate(50, 0);
+     
+     fill(color(255));
+     text(mon[i], 0, 0);
+     popMatrix();
+  }
+  popMatrix();
+  popMatrix();
+  
+  /*
+  // FUEL
+  fuelViz.setYear(sliderVal);
+  pushMatrix();
+  translate(width/2, 100);
+  fuelViz.display();
+  popMatrix();
+  */
   
   // ATMOSPHERE PPM
   
   pushMatrix();
-  translate(width/2, height/2);
-  displayAtmos(r);
+  translate(width/4, height/4);
+  displayAtmos(100);
   popMatrix();
  
   
@@ -383,12 +405,13 @@ void draw()
      
      float rc = sqrt(co2.data[i][min(ind, 37)]/PI);
   }
+
   
   
   
   // CIRCLE PACKING
   pushMatrix();
-  translate(0, 0);
+  translate(width/4, height/4);
   for (int i=0; i<circles.size(); i++) {
     ((Circle)circles.get(i)).draw();
     fill(color(30));
@@ -485,17 +508,7 @@ void iterateLayout(int iterationCounter) {
   }
 }
 
-ArrayList createRandomCircles(int n) {
-  ArrayList circles = new ArrayList();
-  colorMode(HSB, 255);
-  while (n-- > 0) {
-    Circle c = new Circle(random(width), random(height), random(n)+10);
-    c.myColor = color(random(255), 128, 200, 128);
-    circles.add(c);
-  }
-  colorMode(RGB,255);
-  return circles;
-}
+
 
 void controlEvent(ControlEvent theEvent) {
   switch(theEvent.controller().id()) {

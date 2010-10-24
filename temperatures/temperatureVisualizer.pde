@@ -5,12 +5,12 @@ public class TemperatureVisualizer extends AbstractVisualizer
 {
   private HashMap data = new HashMap();
   private int curYear = 2009;
-//  private InterpolateStrategy is=new CircularInterpolation(true);
+  //  private InterpolateStrategy is=new CircularInterpolation(true);
 
   public TemperatureVisualizer() {
     parseCsv();
   }
-  
+
   float ang = 0, target = PI;
 
   private void parseCsv() {
@@ -20,11 +20,11 @@ public class TemperatureVisualizer extends AbstractVisualizer
       String chunks[] = lines[i].split(",");
       int year = Integer.parseInt(chunks[0].trim());
       float[] monthtemps = new float[12];
-      for (int m=1; m < monthtemps.length; m++) {
+      for (int m=1; m < (monthtemps.length+1); m++) {
         if (m >= chunks.length)
           monthtemps[m-1] = monthtemps[m-2];
         else
-          monthtemps[m-1] = /*57.2+1.8**//* 14.0 +*/30 + Float.parseFloat(chunks[m]) /*/100*/;
+          monthtemps[m-1] = /*57.2+1.8**//* 14.0 +*/80 + Float.parseFloat(chunks[m]) /*/100*/;
       }
 
       data.put(year, monthtemps);
@@ -37,42 +37,27 @@ public class TemperatureVisualizer extends AbstractVisualizer
 
   public void display() {
     smooth();
-    noStroke();
+
+    ellipseMode(CENTER);
     colorMode(HSB);
-  
+    noStroke();
+    
     float[] thisYear = (float[])data.get(curYear);
-    
-    float avg = 0;
-    int n = 0;
-    for (float f : thisYear) {
-      avg += f;
-      if (f != 0) n++;
-    }
-    avg /= n;
-    
-//    ang = is.interpolate(ang, target, 0.4);
-//    rotateY(ang);
-//    if (abs(degrees(ang)%180-180) < 10) target += PI;
- 
-    Spline2D s = new Spline2D();
-    s.add(new Vec2D(avg/2, radians(-26)).toCartesian());
-    for (int i = 0; i < n; i++) {
-      Vec2D a = new Vec2D(avg/2, i*TWO_PI/n + radians(-5)).toCartesian();
-      Vec2D b = new Vec2D(avg/2 + thisYear[i]/2, i*TWO_PI/n).toCartesian();
-      Vec2D c = new Vec2D(avg/2, i*TWO_PI/n + radians(5)).toCartesian();
-      s.add(a).add(b).add(c);
+    float d = 170, d2 = 240;
+
+    for(int i = 0; i < 12; i++)
+    {
+      println(i + ": " + thisYear[i]);
+      if (thisYear[i] == 0.0) continue;
+      float val = d + thisYear[i];
+      fill(20, 255, 255);
+      arc(0, 0, d, d, i * 2*PI/12 - PI/2, (i+1) * 2*PI/12 - PI/2);
+      fill(255);
+      arc(0, 0, d2-val/2, d2-val/2, i * 2*PI/12 - PI/2 - radians(2), (i+1) * 2*PI/12 - PI/2 + radians(2));
     }
     
-    stroke(30, 190, 250);
-    fill(30, 250, 250);
-    strokeWeight(2);
-    beginShape();
-    for (Vec2D v : s.computeVertices(20)) {
-      vertex(v.x, v.y);
-    //ellipse(v.x, v.y,1,1);
-    }
-    
-    endShape();
+    fill(255);
+    ellipse(0, 0, 5, 5);
   }
 
   public String getTitle() {
