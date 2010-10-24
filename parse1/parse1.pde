@@ -14,15 +14,45 @@ int curYearIndex = 0;
 
 gmslModule gm;
 co2RegModule co2;
+ppmModule ppm;
 
 // in sqkm
 final float EARTH_SUR = 148940000.0f;
+
+PFont silk8;
+
+
+class ppmModule
+{
+  public float data[];
+  
+  public ppmModule()
+  {
+     String lines[] =  loadStrings("ppm1980.txt");
+     
+     data = new float[lines.length];
+     
+     for(int i = 0; i < lines.length; i++)
+     {
+         data[i] = float(lines[i]);
+     }
+  }
+}
 
 // ct 37
 class co2RegModule
 {
   
-  
+  public String regions[] = {"OECD North America",
+"OECD Pacific",
+"OECD Europe",
+"Africa",
+"Middle East",
+"Non-OECD Europe",
+"Former Soviet Union",
+"Latin America",
+"Asia without China",
+"China"};
   public String lines[];
   public float data[][];
   
@@ -95,8 +125,11 @@ void setup()
   background(255);
   smooth();
   
+  silk8 = loadFont("Silkscreen-8.vlw"); 
+  
   gm = new gmslModule();
   co2 = new co2RegModule();
+  ppm = new ppmModule();
   
   controlP5 = new ControlP5(this);
   s = controlP5.addSlider("sliderVal",1950,2049,100,height-100,width-200,10);
@@ -150,7 +183,7 @@ void draw()
   
   background(255);
   
-  noStroke();
+ // noStroke();
   
   
   float space_sqm = 1000000 * EARTH_SUR / total[curYearIndex];
@@ -158,20 +191,63 @@ void draw()
   float r = sqrt(space_sqm/PI);
  // println(r);
   
+  // GMSL
+  noStroke();
+  
   fill(color(100, 100, 200));
   ellipse(width/2, height/2, 2*r + 2*gm.gmsl[min(curYearIndex, 50)]/4, 2*r + 2*gm.gmsl[min(curYearIndex, 50)]/4);
-  // draw space in 200 sqm
-  fill(color(40));
-  ellipse(width/2, height/2, 2*r, 2*r);
+  
   
 
-  fill(color(200, 200, 50));
+  // PLANET
+  strokeWeight(2);
+  stroke(color(40));
+  fill(color(240));
+  ellipse(width/2, height/2, 2*r, 2*r);
+  
+  // ATMOSPHERE PPM
+  
+  noFill();
+  
+  strokeWeight(2);
+  stroke(color(200, 200, 50));
+  int ppmind = 0;
+  if(sliderVal >= 1980)
+      ppmind = sliderVal - 1980;
+      
+  ellipse(width/2, height/2, 2*r + ppm.data[min(ppmind, 29)]/2.0f, 2*r + ppm.data[min(ppmind, 29)]/2.0f);
+  line(width/2 + cos(PI/3) * (r + ppm.data[min(ppmind, 29)]/4.0f), height/2 - sin(PI/3) * (r + ppm.data[min(ppmind, 29)]/4.0f), width/2 + cos(PI/3) * 1.3 *(r + ppm.data[min(ppmind, 29)]/4.0f), height/2 - sin(PI/3) * 1.3 * (r + ppm.data[min(ppmind, 29)]/4.0f));
+  fill(color(40));
+  noStroke();
+  
+  text(ppm.data[min(ppmind, 29)] + " parts per million CO2 concentration", width/2 + cos(PI/3) * 1.3 *(r + ppm.data[min(ppmind, 29)]/4.0f), height/2 - sin(PI/3) * 1.3 * (r + ppm.data[min(ppmind, 29)]/4.0f));
+  
+  noFill();
+  stroke(color(255, 20, 20));
+  ellipse(width/2, height/2, 2*r + 350.0f/2.0f, 2*r + 350.0f/2.0f);
+  line(width/2 + cos(PI/3.5f) * (r + 350.0f/4.0f), height/2 - sin(PI/3.5f) * (r + 350.0f/4.0f), width/2 + cos(PI/3.5f) * 1.3 *(r + 350.0f/4.0f), height/2 - sin(PI/3.5f) * 1.3 * (r + 350.0f/4.0f));
+  fill(color(40));
+  noStroke();
+  
+  text(350.0f + " boundary CO2 parts per million.", width/2 + cos(PI/3.5f) * 1.3 *(r + 350.0f/4.0f), height/2 - sin(PI/3.5f) * 1.3 * (r + 350.0f/4.0f));
+  
+  
+
+  
+  textFont(silk8);
   for(int i = 0; i < co2.data.length; i++)
   {
     int ind = 0;
     if(sliderVal >= 1971)
       ind = sliderVal - 1971;
-    ellipse(width/2 + r * cos(i * 2*PI/co2.data.length), height/2-r*sin(i * 2*PI/co2.data.length), .02 * co2.data[i][min(ind, 37)],  .02 * co2.data[i][min(ind, 37)]);
+    
+    pushMatrix();
+    translate(width/2 + r * cos(i * 2*PI/co2.data.length), height/2-r*sin(i * 2*PI/co2.data.length));
+    fill(color(200, 200, 50));
+    ellipse(0, 0, .02 * co2.data[i][min(ind, 37)],  .02 * co2.data[i][min(ind, 37)]);
+    fill(color(30));
+    text(co2.regions[i], 0, 0); 
+    popMatrix();
   }
  
   
