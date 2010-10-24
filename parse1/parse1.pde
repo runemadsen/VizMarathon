@@ -12,6 +12,8 @@ int sliderVal = 1950;
 
 int curYearIndex = 0;
 
+boolean foo = false;
+
 gmslModule gm;
 co2RegModule co2;
 ppmModule ppm;
@@ -20,6 +22,47 @@ ppmModule ppm;
 final float EARTH_SUR = 148940000.0f;
 
 PFont silk8;
+
+ArrayList circles;
+long iterationCounter = 0;
+
+class Circle {
+  public float x, y, radius;
+  public color myColor;
+  
+  public Circle(float x, float y, float radius) {
+    this.x = x;
+    this.y = y;
+    this.radius = radius;
+    myColor = color(64,64,64,64);
+  }
+  
+  public void draw() {
+    fill(myColor);
+    stroke(myColor);
+    strokeWeight(3);
+    ellipse((int)x, (int)y, (int)radius*2, (int)radius*2);
+  }
+ 
+ public boolean contains(float x, float y) {
+   float dx = this.x - x;
+   float dy = this.y - y;
+   return sqrt(dx*dx + dy*dy) <= radius;
+ }
+  
+  public float distanceToCenter() {
+    float dx = x - WIDTH/2;
+    float dy = y - HEIGHT/2;
+    return (sqrt(dx*dx + dy*dy));
+  } 
+  
+  public boolean intersects(Circle c) {
+    float dx = c.x - x;
+    float dy = c.y - y;
+    float d = sqrt(dx*dx + dy*dy);
+    return d < radius || d < c.radius;
+  }
+}
 
 
 class ppmModule
@@ -134,6 +177,7 @@ void setup()
   
   controlP5 = new ControlP5(this);
   s = controlP5.addSlider("sliderVal",1950,2049,100,height-100,width-200,10);
+  s.setId(1);
   s.setArrayValue(new float[] {0, 100});  
 
   lines = loadStrings("worldpopulation.csv");
@@ -168,6 +212,8 @@ void setup()
      ellipse(i * 10, 100, total[i]/200000000.0f, total[i]/200000000.0f);
      */
   }
+  
+ circles = createPackC(); 
 }
 
 void update()
@@ -176,6 +222,40 @@ void update()
   
   
   curYearIndex = sliderVal - 1950;
+  
+}
+
+ArrayList createPackC()
+{
+  ArrayList circles = new ArrayList();
+  //colorMode(HSB, 255);
+  
+    for(int i = 0; i < co2.data.length; i++)
+  {
+    int ind = 0;
+    if(sliderVal >= 1971)
+      ind = sliderVal - 1971;
+     
+     float rc = sqrt(co2.data[i][min(ind, 37)]/PI);
+     
+     Circle c = new Circle(width/2+100 * cos(i * 2*PI/co2.data.length), height/2-100*sin(i * 2*PI/co2.data.length),  rc);
+     c.myColor = color(200, 200, 100);
+     circles.add(c);
+    
+    /*
+    pushMatrix();
+    translate(width/2 + r * cos(i * 2*PI/co2.data.length), height/2-r*sin(i * 2*PI/co2.data.length));
+    fill(color(200, 200, 50));
+    ellipse(0, 0, 1 * rc * 2,  1 * rc * 2);
+    fill(color(30));
+    text(co2.regions[i], 0, 0); 
+    popMatrix();
+    */
+  }
+  
+  //colorMode(RGB,255);
+  return circles;
+ 
 }
 
 void draw()
@@ -249,6 +329,7 @@ void draw()
      
      float rc = sqrt(co2.data[i][min(ind, 37)]/PI);
     
+    /*
     pushMatrix();
     translate(width/2 + r * cos(i * 2*PI/co2.data.length), height/2-r*sin(i * 2*PI/co2.data.length));
     fill(color(200, 200, 50));
@@ -256,7 +337,22 @@ void draw()
     fill(color(30));
     text(co2.regions[i], 0, 0); 
     popMatrix();
+    */
   }
+  
+  
+  
+  pushMatrix();
+  translate(0, 0);
+  for (int i=0; i<circles.size(); i++) {
+    ((Circle)circles.get(i)).draw();
+    fill(color(30));
+    text(co2.regions[i], ((Circle)circles.get(i)).x, ((Circle)circles.get(i)).y); 
+  } 
+  for (int i=1; i<50; i++) {
+    iterateLayout(i);
+  }
+  popMatrix();
   
   co2sum /= total[curYearIndex];
   co2sum *= 10000000; // in million tons, so scale by 1 million ---> 10 million to get better visual scale
@@ -272,5 +368,91 @@ void draw()
   
  
   
+}
+
+void mouseReleased()
+{
+   // circles = createPackC(); 
+}
+
+Comparator comp = new Comparator() {
+    public int compare(Object p1, Object p2) {
+      Circle a = (Circle)p1;
+      Circle b = (Circle)p2;
+      if (a.distanceToCenter() < b.distanceToCenter()) 
+        return 1;
+      else if (a.distanceToCenter() > b.distanceToCenter())
+        return -1;
+      else
+        return 0;
+    }
+};
+
+void iterateLayout(int iterationCounter) {
+
+  Object circs[] = circles.toArray();
+  Arrays.sort(circs, comp);
+
+  //fix overlaps
+  Circle ci, cj;
+  PVector v = new PVector();
+
+  for (int i=0; i<circs.length; i++) {
+    ci = (Circle)circs[i];
+    for (int j=i+1; j<circs.length; j++) {
+      if (i != j) {
+        cj = (Circle)circs[j];
+        float dx = cj.x - ci.x;
+        float dy = cj.y - ci.y;
+        float r = ci.radius + cj.radius;
+        float d = (dx*dx) + (dy*dy);
+        if (d < (r * r) - 0.01 ) {
+
+          v.x = dx;
+          v.y = dy;
+
+          v.normalize();
+          v.mult((r-sqrt(d))*0.5);
+
+            cj.x += v.x;
+            cj.y += v.y;
+   
+            ci.x -= v.x;
+            ci.y -= v.y;       
+        }
+      }
+    }
+  }
+
+  //Contract
+  float damping = 0.1/(float)(iterationCounter);
+  for (int i=0; i<circs.length; i++) {
+    Circle c = (Circle)circs[i];
+      v.x = c.x-width/2;
+      v.y = c.y-height/2;
+      v.mult(damping);
+      c.x -= v.x;
+      c.y -= v.y;
+  }
+}
+
+ArrayList createRandomCircles(int n) {
+  ArrayList circles = new ArrayList();
+  colorMode(HSB, 255);
+  while (n-- > 0) {
+    Circle c = new Circle(random(width), random(height), random(n)+10);
+    c.myColor = color(random(255), 128, 200, 128);
+    circles.add(c);
+  }
+  colorMode(RGB,255);
+  return circles;
+}
+
+void controlEvent(ControlEvent theEvent) {
+  switch(theEvent.controller().id()) {
+    case(1):
+     circles = createPackC(); 
+    break;
+  }
 }
 
