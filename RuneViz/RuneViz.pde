@@ -2,8 +2,11 @@ String rows[];
 String[] countries;
 int years[];
 float data[][];
-int curYear = 0;
-float diameter = 500;
+int curYear = 1970;
+float diameter = 10; // size of 1 m2
+
+/*  Setup
+___________________________________________________________ */
 
 void setup()
 {
@@ -22,8 +25,7 @@ void setup()
   {
       years[i - 1] = int(tempyears[i]);
   }
-  
-  //years = rows[0].split(",");
+ 
   countries = new String[rows.length - 1];
   data = new float[rows.length - 1][5];
 
@@ -32,41 +34,131 @@ void setup()
     String columns[] = rows[i].split(",");
     
     countries[i - 1] = columns[0]; 
-    data[i - 1][0] = float(columns[1]) / 100;
-    data[i - 1][1] = float(columns[2]) / 100;
-    data[i - 1][2] = float(columns[3]) / 100;
-    data[i - 1][3] = float(columns[4]) / 100;
-    data[i - 1][4] = float(columns[5]) / 100; 
+    data[i - 1][0] = float(columns[1]) / 1000;
+    data[i - 1][1] = float(columns[2]) / 1000;
+    data[i - 1][2] = float(columns[3]) / 1000;
+    data[i - 1][3] = float(columns[4]) / 1000;
+    data[i - 1][4] = float(columns[5]) / 1000; 
   }
   
-  ellipseMode(CENTER);
-  
+  rectMode(CENTER);
 }
+
+/*  Draw
+___________________________________________________________ */
 
 void draw()
 {
-  background(255);
+  float num = getNumber(curYear);
+  background(#7aa9c7);
   
   pushMatrix();
-  translate(width / 2, height / 2);
+  translate(100, 100);
   
-  // draw 100 percent
-  noFill();
-  stroke(0, 0, 0);
-  strokeWeight(3);
-  ellipse(0, 0, diameter, diameter);
+  int curX = 0;
+  int curY = 0;
+  int spacing = 2;
+  int gridWidth = 300;
   
-  // draw year
-  fill(#a6b63e);
   noStroke();
-  ellipse(0, 0, data[data.length - 1][curYear] * diameter, data[data.length - 1][curYear] * diameter);
+  fill(0, 0, 0);
+  text("m2 per citizen: " + int(num), 0, -20);
+  
+  strokeWeight(1);
+  stroke(#1f2e16);
+  fill(#a8b53c);
+  
+  for(int i = 0; i < num; i++)
+  {
+    rect(curX, curY, diameter, diameter);
+     
+    curX += diameter + spacing;
+    
+    if(curX >= gridWidth)
+    {
+      curX = 0;
+      curY += diameter + spacing;
+    }
+  }
+ 
+  /*float r = 0.1;
+  float theta = 0;
+  float rm = .20f;
+  
+  noFill();
+  stroke(#454a1a);
+  
+  for(int i = 0; i < getNumber(curYear); i++)
+  {
+    // Polar to Cartesian conversion
+    float x = r * cos(theta);
+    float y = r * sin(theta);
+  
+    // Draw an ellipse at x,y
+    noStroke();
+    fill(0);
+    ellipse(x, y, 10, 10); 
+    
+    // Increment the angle
+    
+    theta += 0.05 * 500/r;
+   
+    // Increment the radius
+    rm -=  0.001f;
+    r += rm;
+  }*/
   
   popMatrix();
   fill(0, 0, 0);
-  text("Current Year: " + years[curYear], 10, 20);
+  text("Current Year: " + curYear, 10, 20);
 }
 
-void mousePressed()
+/*  Calc number between 2 data points
+___________________________________________________________ */
+
+float getNumber(int selectedYear)
 {
-   curYear++; 
+  int lowYear = 0;
+  float lowNum = 0;
+  float highNum = 0;
+  int highYear = 99999;
+  
+  for(int i = 0; i < years.length; i++)
+  {
+     if(years[i] > lowYear && years[i] <= selectedYear)  
+     {
+       lowYear = years[i];
+       lowNum = data[data.length - 1][i];
+     }
+     
+     if(years[i] < highYear && years[i] >= selectedYear)
+     {
+       highYear = years[i];
+       highNum = data[data.length - 1][i];
+     }
+  }
+  
+  float num;
+  
+  if(lowYear == highYear)
+  {
+      num = lowNum;
+  }
+  else
+  {
+     float percentage = float(selectedYear - lowYear) / float(highYear - lowYear);
+     num = ((highNum - lowNum) * percentage) + lowNum;
+  }
+  
+  //return num * 1000000; // convert to square meters
+  
+  return num * 100000; // convert to square meters
+}
+
+/*  Mouse Pressed
+___________________________________________________________ */
+
+void mouseMoved()
+{
+   curYear = int(map(mouseX, 0, width, 1970, 2001));
 }
