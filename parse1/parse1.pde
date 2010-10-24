@@ -330,7 +330,7 @@ void draw()
   
   float r = sqrt(space_sqm/PI);
  // println(r);
-  
+  r = 100;
   
   // GMSL  
   pushMatrix();
