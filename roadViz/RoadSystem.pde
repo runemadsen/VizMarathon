@@ -197,6 +197,33 @@ class RoadSystem {
     targetLength = roadLength[yearIndex];
     println("Target Length: " + targetLength);
   }
+  
+  
+  void center(){
+
+     ArrayList<Road> allRoads = getAllRoads();
+    int minX;
+    int minY;
+    int maxX;
+    int maxY;
+    for(int i = 0; i < allRoads.size(); i++) {
+      Road tempRoad = allRoads.get(i);
+      if(tempRoad.x1 > maxX) {
+        maxX = tempRoad.x1;
+      }
+      if(tempRoad.x1 < minX) {
+        tempRoad.x1 = minX;
+      }
+      if(tempRoad.y1 > maxY) {
+        maxY = tempRoad.y1;
+      }
+      if(tempRoad.y1 < minY) {
+        tempRoad.y1 = minY;
+      }
+    }   
+    translate(maxX-minX, maxY-minY);
+
+  }
 
   // TODO set highway percent
 
@@ -341,7 +368,10 @@ class Road {
   }
 
   void display() {
+   
+
     // Draw
+
     strokeWeight(thickness); // TODO highway related thickness
     strokeCap(SQUARE);
     smooth();
@@ -355,5 +385,7 @@ class Road {
     for(int i = 0; i < children.size(); i++) {
       children.get(i).display();
     }
+
   }
 }
+
