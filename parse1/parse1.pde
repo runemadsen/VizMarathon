@@ -123,11 +123,41 @@ class co2RegModule
   }
 }
 
+void displayAtmos(float r)
+{
+   noFill();
+  
+  strokeWeight(2);
+  stroke(color(200, 200, 50));
+  int ppmind = 0;
+  if(sliderVal >= 1980)
+      ppmind = sliderVal - 1980;
+      
+  ellipse(0, 0, 2*r + ppm.data[min(ppmind, 29)]/2.0f, 2*r + ppm.data[min(ppmind, 29)]/2.0f);
+  line(cos(PI/3) * (r + ppm.data[min(ppmind, 29)]/4.0f), - sin(PI/3) * (r + ppm.data[min(ppmind, 29)]/4.0f), cos(PI/3) * 1.3 *(r + ppm.data[min(ppmind, 29)]/4.0f), - sin(PI/3) * 1.3 * (r + ppm.data[min(ppmind, 29)]/4.0f));
+  fill(color(40));
+  noStroke();
+  
+  text(ppm.data[min(ppmind, 29)] + " parts per million CO2 concentration", cos(PI/3) * 1.3 *(r + ppm.data[min(ppmind, 29)]/4.0f), - sin(PI/3) * 1.3 * (r + ppm.data[min(ppmind, 29)]/4.0f));
+  
+  noFill();
+  stroke(color(255, 20, 20));
+  ellipse(0, 0, 2*r + 350.0f/2.0f, 2*r + 350.0f/2.0f);
+  line(cos(PI/3.5f) * (r + 350.0f/4.0f),  - sin(PI/3.5f) * (r + 350.0f/4.0f), cos(PI/3.5f) * 1.3 *(r + 350.0f/4.0f), - sin(PI/3.5f) * 1.3 * (r + 350.0f/4.0f));
+  fill(color(40));
+  noStroke();
+  
+  text(350.0f + " boundary CO2 parts per million.", cos(PI/3.5f) * 1.3 *(r + 350.0f/4.0f), - sin(PI/3.5f) * 1.3 * (r + 350.0f/4.0f));
+  
+  
+}
+
 class gmslModule
 {
   String lines[];
   int yr_raw[], yr[];
   public float gmsl_raw[], gmsl[];
+  int yer = 1950;
   
   public gmslModule()
   {
@@ -160,7 +190,28 @@ class gmslModule
        gmsl[i] = avg;
       // println(avg);
     }
-  } 
+  }
+ 
+ public void setYear(int y)
+ {
+   yer = y;
+ } 
+ 
+ public void display(float r)
+ {
+   // GMSL
+  noStroke();
+  
+  fill(color(180, 180, 220));
+  float d = 2*r + 2*gmsl[min(curYearIndex, 50)]/4;
+ // ellipse(width/2, height/2, d, d);
+  for(int i = 0; i < 12; i++)
+  {
+     float val = 2*r + 2*gmsl_raw[min(curYearIndex, 50)*12+i]/4;
+     //fill(color(180, 180, i*10+50));
+     arc(0, 0, val, val, i * 2*PI/12 - PI/2, (i+1) * 2*PI/12 - PI/2);
+  }
+ }
 }
 
 void setup()
@@ -268,8 +319,6 @@ void draw()
 {
   update();
   
-  
-  
   background(255);
   
   h.setYear(sliderVal);
@@ -277,33 +326,29 @@ void draw()
   
  // noStroke();
   
-  
   float space_sqm = 1000000 * EARTH_SUR / total[curYearIndex];
   
   float r = sqrt(space_sqm/PI);
  // println(r);
   
-  // GMSL
-  noStroke();
   
-  fill(color(180, 180, 220));
-  float d = 2*r + 2*gm.gmsl[min(curYearIndex, 50)]/4;
- // ellipse(width/2, height/2, d, d);
-  for(int i = 0; i < 12; i++)
-  {
-     float val = 2*r + 2*gm.gmsl_raw[min(curYearIndex, 50)*12+i]/4;
-     //fill(color(180, 180, i*10+50));
-     arc(width/2, height/2, val, val, i * 2*PI/12 - PI/2, (i+1) * 2*PI/12 - PI/2);
-  }
-  
-  
+  // GMSL  
+  pushMatrix();
+  translate(width/2, height/2);
+  gm.display(r);
+  popMatrix();
   
 
   // PLANET
+  pushMatrix();
+  translate(width/2, height/2);
   strokeWeight(2);
   stroke(color(40));
   fill(color(240));
-  ellipse(width/2, height/2, 2*r, 2*r);
+  ellipse(0, 0, 2*r, 2*r);
+  popMatrix();
+  
+  
   
   // TEMP
   tempViz.setYear(min(sliderVal, 2010));
@@ -317,35 +362,13 @@ void draw()
   noFill();
   colorMode(RGB, 255);
   
+  
   // ATMOSPHERE PPM
   
-  noFill();
-  
-  strokeWeight(2);
-  stroke(color(200, 200, 50));
-  int ppmind = 0;
-  if(sliderVal >= 1980)
-      ppmind = sliderVal - 1980;
-      
-  ellipse(width/2, height/2, 2*r + ppm.data[min(ppmind, 29)]/2.0f, 2*r + ppm.data[min(ppmind, 29)]/2.0f);
-  line(width/2 + cos(PI/3) * (r + ppm.data[min(ppmind, 29)]/4.0f), height/2 - sin(PI/3) * (r + ppm.data[min(ppmind, 29)]/4.0f), width/2 + cos(PI/3) * 1.3 *(r + ppm.data[min(ppmind, 29)]/4.0f), height/2 - sin(PI/3) * 1.3 * (r + ppm.data[min(ppmind, 29)]/4.0f));
-  fill(color(40));
-  noStroke();
-  
-  text(ppm.data[min(ppmind, 29)] + " parts per million CO2 concentration", width/2 + cos(PI/3) * 1.3 *(r + ppm.data[min(ppmind, 29)]/4.0f), height/2 - sin(PI/3) * 1.3 * (r + ppm.data[min(ppmind, 29)]/4.0f));
-  
-  noFill();
-  stroke(color(255, 20, 20));
-  ellipse(width/2, height/2, 2*r + 350.0f/2.0f, 2*r + 350.0f/2.0f);
-  line(width/2 + cos(PI/3.5f) * (r + 350.0f/4.0f), height/2 - sin(PI/3.5f) * (r + 350.0f/4.0f), width/2 + cos(PI/3.5f) * 1.3 *(r + 350.0f/4.0f), height/2 - sin(PI/3.5f) * 1.3 * (r + 350.0f/4.0f));
-  fill(color(40));
-  noStroke();
-  
-  text(350.0f + " boundary CO2 parts per million.", width/2 + cos(PI/3.5f) * 1.3 *(r + 350.0f/4.0f), height/2 - sin(PI/3.5f) * 1.3 * (r + 350.0f/4.0f));
-  
-  
-
-  
+  pushMatrix();
+  translate(width/2, height/2);
+  displayAtmos(r);
+  popMatrix();
  
   
   float co2sum = .0f;
@@ -359,20 +382,11 @@ void draw()
      co2sum += co2.data[i][min(ind, 37)];
      
      float rc = sqrt(co2.data[i][min(ind, 37)]/PI);
-    
-    /*
-    pushMatrix();
-    translate(width/2 + r * cos(i * 2*PI/co2.data.length), height/2-r*sin(i * 2*PI/co2.data.length));
-    fill(color(200, 200, 50));
-    ellipse(0, 0, 1 * rc * 2,  1 * rc * 2);
-    fill(color(30));
-    text(co2.regions[i], 0, 0); 
-    popMatrix();
-    */
   }
   
   
   
+  // CIRCLE PACKING
   pushMatrix();
   translate(0, 0);
   for (int i=0; i<circles.size(); i++) {
@@ -385,6 +399,8 @@ void draw()
   }
   popMatrix();
   
+  
+  // PERSONAL PPM
   co2sum /= total[curYearIndex];
   co2sum *= 10000000; // in million tons, so scale by 1 million ---> 10 million to get better visual scale
   pushMatrix();
