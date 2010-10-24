@@ -2,36 +2,55 @@ class RoadSystem {
   // Data source variables
   int[] years;
   int[] roadLength = new int[16]; //[year]
-  int targetYear;  
+  int[] highwayLength = new int[16]; //[year]  
+  int targetYear;
 
   // Road variables
   Road firstRoad;
   int startRoads = 8;
   int targetLength = 0;
-  int xPos, yPos;
+  int targetHighwayLength = 0;
+  int totalHighwayLength = 0;
+  int xPos = 0;
+  int yPos = 0;
 
   RoadSystem(int _xPos, int _yPos) {
-    // Set position
+    // Set overall position
     xPos = _xPos;
     yPos = _yPos;
 
-    // Load the data
-    String lines[] = loadStrings("road-length.csv");
-    years = subset(int(lines[1].split(",")), 1);  
-
-    // Initialize road length array
+    // Initialize highway and road length array
     for(int i = 0; i < 16; i++) {
       roadLength[i] = 0;
+      highwayLength[i] = 0;
     }
+
+    // Load the road data (1000s of km, multiplied by 1000 to get km.)
+    String lines[] = loadStrings("road-length.csv");
+    years = subset(int(lines[1].split(",")), 1);  
 
     // Sum the road values for global picture
     for(int i = 2; i < lines.length; i++) {
       int temp[] = subset(int(lines[i].split(",")), 1);
 
       for(int j = 0; j < temp.length; j++) {
-        roadLength[j] += temp[j];
+        
+        roadLength[j] += (temp[j] * 1000); // multiply to get KM!
       }
     }
+    
+
+    // Load the highway data (km)
+    lines = loadStrings("highway-length.csv");
+  
+    // Sum the highway values for global picture
+    for(int i = 2; i < lines.length; i++) {
+      int temp[] = subset(int(lines[i].split(",")), 1);
+
+      for(int j = 0; j < temp.length; j++) {
+        highwayLength[j] += temp[j];
+      }
+    }    
 
     // Seed the whole thing with a first road   
     firstRoad = new Road(0, 0, 60, 100);
@@ -47,7 +66,6 @@ class RoadSystem {
   }
 
   void addRoad() {
-    println("addroad");
     // which one to add to?
     // pick source index from exponential probability from the beginning to end of road list?
 
@@ -90,6 +108,20 @@ class RoadSystem {
 
     tempParent.children.add(tempRoad);
   }
+
+  int getHighwyLength() {
+    int totalLength = 0;
+    ArrayList<Road> allRoads = getAllRoads();
+    for(int i = 0; i < allRoads.size(); i++) {
+      if(allRoads.get(i).isHighway) {
+        totalLength += allRoads.get(i).roadLength;
+      }
+    }
+    return totalLength;
+  }
+
+
+
 
 
   int tempDepth;
@@ -166,11 +198,7 @@ class RoadSystem {
       randomDepth = ceil((random(1) * getMaxDepth()));
     }
 
-
-    println("Random depth: " + randomDepth);
-    println("Max depth: " + getMaxDepth());    
     ArrayList roadsAtDepth = getRoadsAtDepth(randomDepth);
-    println(roadsAtDepth);
 
     int randomIndex = floor(random(0, roadsAtDepth.size()));
 
@@ -179,26 +207,50 @@ class RoadSystem {
 
   void setYear(int _y) {
     targetYear = constrain(_y, 1970, 2005);
-
-    println("Trying to go to year: " + targetYear);
-
+    
     int yearIndex = 0;
-    int minDistance = 1000000;
+    int minDistance = 100000000;
     for(int i = 0; i < years.length; i++) {
       int tempDistance = abs(years[i] - targetYear);
       if(tempDistance < minDistance) {
         minDistance = tempDistance;
         yearIndex = i;
       }
-    }
+    }    
 
-    println("Year Index: " + yearIndex);    
-
-    targetLength = roadLength[yearIndex];
-    println("Target Length: " + targetLength);
+    targetLength = roadLength[yearIndex] / 1000; // divide by 1000 for sanity TODO find the right amount
+    targetHighwayLength = highwayLength[yearIndex] / 1000;
   }
+  
+//  
+//  void center(){
+//
+//     ArrayList<Road> allRoads = getAllRoads();
+//    int minX;
+//    int minY;
+//    int maxX;
+//    int maxY;
+//    for(int i = 0; i < allRoads.size(); i++) {
+//      Road tempRoad = allRoads.get(i);
+//      if(tempRoad.x1 > maxX) {
+//        maxX = tempRoad.x1;
+//      }
+//      if(tempRoad.x1 < minX) {
+//        tempRoad.x1 = minX;
+//      }
+//      if(tempRoad.y1 > maxY) {
+//        maxY = tempRoad.y1;
+//      }
+//      if(tempRoad.y1 < minY) {
+//        tempRoad.y1 = minY;
+//      }
+//    }   
+//    translate(maxX-minX, maxY-minY);
+//
+//  }
 
-  // TODO set highway percent
+
+
 
   void display() {    
     // Draw
@@ -215,6 +267,65 @@ class RoadSystem {
     else if(totalLength > (targetLength + 100)) {
       removeRoad();
     }
+
+    // and maintain highway length
+    totalHighwayLength = getHighwayLength(); 
+
+    if (totalHighwayLength < targetHighwayLength) {
+      addHighway();
+    }
+    else if(totalHighwayLength > (targetHighwayLength + 50)) {
+      removeHighway();
+    }
+
+  }
+  
+ int getHighwayLength() {
+   totalHighwayLength = 0;
+   
+   ArrayList<Road> roads = getAllRoads();
+   
+   for(int i = 0; i < roads.size(); i++) {
+     if(roads.get(i).isHighway) {
+       totalHighwayLength += roads.get(i).roadLength;
+     }
+   }
+   
+   return totalHighwayLength;
+ }  
+
+  void addHighway() {
+    ArrayList<Road> roads;
+
+    for(int j = 0; j < getMaxDepth(); j++) {
+      roads = getRoadsAtDepth(j);
+
+      for(int i = 0; i < roads.size(); i++) {
+        if(!roads.get(i).isHighway) {
+          roads.get(i).isHighway = true;
+          break;
+        }
+      }
+    }
+  }
+  
+  
+
+  void removeHighway() {
+    ArrayList<Road> roads;
+
+    for(int j = getMaxDepth(); j > 0; j--) {
+      roads = getRoadsAtDepth(j);
+      
+
+
+      for(int i = roads.size() - 1; i > 0; i--) {
+        if(roads.get(i).isHighway) {
+          roads.get(i).isHighway = false;
+          break;
+        }
+      }
+    }
   }
 }
 
@@ -230,12 +341,12 @@ class Road {
   int depth = 0;
   int maxChildren = 1;
   boolean isOrigin = false; 
+  boolean isHighway = true;
 
   // Initial constructor
   Road(float _x1, float _y1, float _angle, float _roadLength) {
     parent = null;
     connection = null;
-    println("parent constructor");
     children = new ArrayList();
     x1 = _x1;
     y1 = _y1;
@@ -249,7 +360,6 @@ class Road {
 
   // Child constructor
   Road(Road _parent, float _angle, float _roadLength, float _parentPercent) {
-    println("child constructer");
     parent = _parent;
     connection = null;    
     children = new ArrayList();
@@ -341,13 +451,16 @@ class Road {
   }
 
   void display() {
+   
+
     // Draw
-    strokeWeight(thickness); // TODO highway related thickness
+    strokeWeight(thickness);
+    if(isHighway) strokeWeight(thickness + 2); // highways are beefier
     strokeCap(SQUARE);
     smooth();
 
     stroke(map(depth, 0, 5, 0, 20));
-    if(connection != null) stroke(255, 0, 0); // TODO fix connections
+    if(connection != null || isHighway) stroke(255, 0, 0); // TODO fix connections
 
     line(x1, y1, x2, y2);
 
@@ -355,5 +468,7 @@ class Road {
     for(int i = 0; i < children.size(); i++) {
       children.get(i).display();
     }
+
   }
 }
+
