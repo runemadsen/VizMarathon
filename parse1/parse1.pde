@@ -30,6 +30,10 @@ PFont silk8;
 ArrayList circles;
 long iterationCounter = 0;
 
+TimeBar bar;
+
+PVector seatemp, planet, roads, habitat, stats;
+String active = "roads";
 
 class ppmModule
 {
@@ -197,6 +201,9 @@ void setup()
   silk8 = loadFont("Silkscreen-8.vlw"); 
   textFont(silk8);
   
+  bar = new TimeBar();
+  bar.setLocation(0, 800);
+  
   h = new Habitat();
   
   gm = new gmslModule();
@@ -205,10 +212,17 @@ void setup()
   tempViz = new TemperatureVisualizer();
   fuelViz = new FuelConsumptionVisualizer();
   
-  controlP5 = new ControlP5(this);
-  s = controlP5.addSlider("sliderVal",1950,2049,100,height-100,width-200,10);
-  s.setId(1);
-  s.setArrayValue(new float[] {0, 100});  
+  active = "roads";
+  roads = PVector(width/2, height/2);
+  seatemp = PVector(200, 2*height/5);
+  habitat = PVector(200, 3*height/5);
+  planet = PVector(200, 4*height/5);
+  
+  
+ // controlP5 = new ControlP5(this);
+ // s = controlP5.addSlider("sliderVal",1950,2049,100,height-100,width-200,10);
+  //s.setId(1);
+ // s.setArrayValue(new float[] {0, 100});  
 
   lines = loadStrings("worldpopulation.csv");
 
@@ -250,7 +264,7 @@ void update()
 {
  // println(sliderVal);
   
-  
+  sliderVal = bar.getYear();
   curYearIndex = sliderVal - 1950;
   
 }
@@ -292,7 +306,11 @@ void draw()
 {
   update();
   
+  textFont(silk8);
+  
   background(255);
+  
+    
   
   h.setYear(sliderVal);
   h.display();
@@ -444,15 +462,32 @@ void draw()
   popMatrix();
   
   
-  
+  bar.display();
  
   
 }
 
+void mousePressed()
+{
+   bar.checkPress(); 
+}
+
 void mouseReleased()
 {
-   // circles = createPackC(); 
+  bar.stopDrag();
 }
+
+void mouseDragged()
+{
+  println("Mouse moved");
+  bar.checkDrag(); 
+  if(bar.dragging)
+  {
+    createPackC();
+  }
+}
+
+
 
 Comparator comp = new Comparator() {
     public int compare(Object p1, Object p2) {
@@ -516,7 +551,7 @@ void iterateLayout(int iterationCounter) {
 }
 
 
-
+/*
 void controlEvent(ControlEvent theEvent) {
   switch(theEvent.controller().id()) {
     case(1):
@@ -524,4 +559,5 @@ void controlEvent(ControlEvent theEvent) {
     break;
   }
 }
+*/
 
