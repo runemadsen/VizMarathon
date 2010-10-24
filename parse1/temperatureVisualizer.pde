@@ -51,12 +51,13 @@ public class TemperatureVisualizer extends AbstractVisualizer
       if (thisYear[i] == 0.0) continue;
       float val = d + thisYear[i];
       
-      colorMode(HSB);
-      fill(20, 255, 255);
+      //colorMode(HSB);
+      colorMode(RGB);
+      fill(#f5a133);
       arc(0, 0, d, d, i * 2*PI/12 - PI/2, (i+1) * 2*PI/12 - PI/2);
      // noStroke();
-       colorMode(RGB);
-      stroke(color(255, 90, 90));
+       //colorMode(RGB);
+      stroke(#e18c1c);
       
       strokeWeight(2);
       fill(255);

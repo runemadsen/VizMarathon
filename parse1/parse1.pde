@@ -29,6 +29,7 @@ RoadSystem roadSys;
 final float EARTH_SUR = 148940000.0f;
 
 PFont silk8;
+PFont helvetica;
 
 ArrayList circless;
 long iterationCounter = 0;
@@ -172,10 +173,10 @@ class gmslModule
  public void display(float r)
  {
    // GMSL
-  stroke(color(90, 90, 255));
+  stroke(#3a69a5);
   strokeWeight(2);
   
-  fill(color(180, 180, 220));
+  fill(#c7d4e3);
   float d = 2*r + 2*gmsl[min(curYearIndex, 50)]/4;
  // ellipse(width/2, height/2, d, d);
   for(int i = 0; i < 12; i++)
@@ -200,12 +201,13 @@ void setup()
   smooth();
   
   silk8 = loadFont("Silkscreen-8.vlw"); 
+  helvetica = loadFont("Helvetica-Bold-48.vlw"); 
   textFont(silk8);
   
   bar = new TimeBar();
   bar.setLocation(0, 850);
   
-  h = new Habitat();
+  //h = new Habitat();
   
   gm = new gmslModule();
   co2 = new co2RegModule();
@@ -217,9 +219,9 @@ void setup()
   active = "roads";
   int xoff = 150;
   roads = new PVector(135, height / 8);
-  seatemp = new PVector(xoff, 2*height/5);
-  habitat = new PVector(95, 3*height/5);
-  planet = new PVector(xoff, 4*height/5);
+  seatemp = new PVector(160f, 410);
+  //habitat = new PVector(95, 3*height/5);
+  planet = new PVector(xoff, 680);
   
  // controlP5 = new ControlP5(this);
  // s = controlP5.addSlider("sliderVal",1950,2049,100,height-100,width-200,10);
@@ -303,12 +305,12 @@ void draw()
   
   background(#f9f5ef);
   
-  animationCounter -= 150.0f;
+  animationCounter -= 600.0f;
   if(animationCounter <= 0) animationCounter = .0f;
   
    PVector cent = new PVector(width/2, height/2);
     
-  pushMatrix();
+  /*pushMatrix();
   if(active.equals("habitat") && animationCounter == .0f)
   {
     translate(width/2, height/2);
@@ -332,7 +334,7 @@ void draw()
   }
   h.setYear(sliderVal);
   h.display();
-  popMatrix();
+  popMatrix();*/
   
  // noStroke();
   
@@ -382,21 +384,21 @@ void draw()
   else if (!active.equals("planet") && animationCounter == .0f || !lastactive.equals("planet") && !active.equals("planet") && animationCounter > .0f)
   {
     translate(planet.x, planet.y);
-    scale(.50f);
+    scale(.80f);
   } 
   // shrinking
   else if (lastactive.equals("planet") && !active.equals("planet") && animationCounter > .0f) 
   {
     PVector v = PVector.add(planet, (PVector.mult(PVector.sub(cent, planet), animationCounter/float(ANIMAX))));
      translate( v.x, v.y );
-     scale( map(animationCounter, 0, ANIMAX, .50f, 1.0f));
+     scale( map(animationCounter, 0, ANIMAX, .80f, 1.0f));
   } 
   // growing
   else if (active.equals("planet") && animationCounter > .0f)
   {
       PVector v = PVector.add(cent, (PVector.mult(PVector.sub(planet, cent), animationCounter/float(ANIMAX))));
      translate( v.x, v.y );
-     scale( map(animationCounter, 0, ANIMAX, 1.0f, 0.50f));
+     scale( map(animationCounter, 0, ANIMAX, 1.0f, 0.80f));
   }
   // PLANET
   
@@ -477,6 +479,8 @@ void draw()
  
   colorMode(RGB, 255);
   
+  textFont(helvetica, 10);
+  
   pushMatrix();
   pushMatrix();
   scale(.95f);
@@ -509,11 +513,13 @@ void draw()
 
   
   // FUEL
+  /*
   fuelViz.setYear(sliderVal);
   pushMatrix();
   translate(width/2 + 50, 100);
   fuelViz.display(total[curYearIndex]);
   popMatrix();
+  */
   
   float co2sum = .0f;
   
@@ -530,6 +536,7 @@ void draw()
 
   
   // PERSONAL PPM
+  /*
   co2sum /= total[curYearIndex];
   co2sum *= 10000000; // in million tons, so scale by 1 million ---> 10 million to get better visual scale
   pushMatrix();
@@ -541,7 +548,7 @@ void draw()
   noStroke();
   text(("" + co2sum/10.0f + " tons personal co2 emission "), 30, -co2sum);
   popMatrix();
-  
+  */
   
   bar.display();
  
@@ -637,16 +644,17 @@ void keyPressed()
    if(key == '1'){
       active = "roads";
       animationCounter = ANIMAX;
-   } else if (key == '4'){
+   } else if (key == '3'){
       active = "planet"; 
       animationCounter = ANIMAX;
    } else if (key == '2'){
       active = "seatemp"; 
       animationCounter = ANIMAX;
-   } else if (key == '3'){
+   } 
+   /*else if (key == '3'){
       active = "habitat"; 
       animationCounter = ANIMAX;
-   }
+   }*/
    
   
    
