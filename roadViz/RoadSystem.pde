@@ -39,7 +39,6 @@ class RoadSystem {
       }
     }
     
-    println(roadLength);
 
     // Load the highway data (km)
     lines = loadStrings("highway-length.csv");
@@ -223,32 +222,32 @@ class RoadSystem {
     targetHighwayLength = highwayLength[yearIndex] / 1000;
   }
   
-  
-  void center(){
-
-     ArrayList<Road> allRoads = getAllRoads();
-    int minX;
-    int minY;
-    int maxX;
-    int maxY;
-    for(int i = 0; i < allRoads.size(); i++) {
-      Road tempRoad = allRoads.get(i);
-      if(tempRoad.x1 > maxX) {
-        maxX = tempRoad.x1;
-      }
-      if(tempRoad.x1 < minX) {
-        tempRoad.x1 = minX;
-      }
-      if(tempRoad.y1 > maxY) {
-        maxY = tempRoad.y1;
-      }
-      if(tempRoad.y1 < minY) {
-        tempRoad.y1 = minY;
-      }
-    }   
-    translate(maxX-minX, maxY-minY);
-
-  }
+//  
+//  void center(){
+//
+//     ArrayList<Road> allRoads = getAllRoads();
+//    int minX;
+//    int minY;
+//    int maxX;
+//    int maxY;
+//    for(int i = 0; i < allRoads.size(); i++) {
+//      Road tempRoad = allRoads.get(i);
+//      if(tempRoad.x1 > maxX) {
+//        maxX = tempRoad.x1;
+//      }
+//      if(tempRoad.x1 < minX) {
+//        tempRoad.x1 = minX;
+//      }
+//      if(tempRoad.y1 > maxY) {
+//        maxY = tempRoad.y1;
+//      }
+//      if(tempRoad.y1 < minY) {
+//        tempRoad.y1 = minY;
+//      }
+//    }   
+//    translate(maxX-minX, maxY-minY);
+//
+//  }
 
 
 
@@ -279,9 +278,6 @@ class RoadSystem {
       removeHighway();
     }
 
-
-//    println("Target Length: " + targetLength);
-//    println("Target Highway Length: " + targetHighwayLength);
   }
   
  int getHighwayLength() {
@@ -351,7 +347,6 @@ class Road {
   Road(float _x1, float _y1, float _angle, float _roadLength) {
     parent = null;
     connection = null;
-    println("parent constructor");
     children = new ArrayList();
     x1 = _x1;
     y1 = _y1;
