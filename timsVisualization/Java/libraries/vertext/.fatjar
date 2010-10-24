@@ -1,0 +1,14 @@
+#Fat Jar Configuration File
+#Fri Nov 30 23:43:14 PST 2007
+onejar.license.required=true
+manifest.classpath=
+manifest.removesigners=true
+onejar.checkbox=false
+jarname=Vertext.jar
+manifest.mergeall=true
+manifest.mainclass=
+manifest.file=<createnew>
+jarname.isextern=false
+onejar.expand=
+excludes=
+includes=
