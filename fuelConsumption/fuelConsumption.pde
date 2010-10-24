@@ -2,22 +2,21 @@ import controlP5.*;
 
 ControlP5 controlP5;
 
-TemperatureVisualizer tv; 
-
+FuelConsumptionVisualizer tv; 
 
 void setup() {
   size(500,700, P2D);
   frameRate(24);
   
   controlP5 = new ControlP5(this);
-  controlP5.addSlider("slider",1881,2010,2010,0,0,width, 20);
+  controlP5.addSlider("slider",1960,2007,2007,0,0,width, 20);
   
-  tv = new TemperatureVisualizer();
+  tv = new FuelConsumptionVisualizer();
   
 }
 
 void draw() {
-  background(255);
+  background(0);
   controlP5.draw();
   
   pushMatrix();
