@@ -181,7 +181,7 @@ class gmslModule
  // ellipse(width/2, height/2, d, d);
   for(int i = 0; i < 12; i++)
   {
-     float val = 2*r + 2*gmsl_raw[min(curYearIndex, 50)*12+i]/4;
+     float val = 2.5*r + 2*gmsl_raw[min(curYearIndex, 50)*12+i]/4;
      //fill(color(180, 180, i*10+50));
      arc(0, 0, val * 2 - 200, val * 2 - 200, i * 2*PI/12 - PI/2 + .01, (i+1) * 2*PI/12 - PI/2 - .01);
   }
@@ -455,7 +455,7 @@ void draw()
   }
   
  
-  scale(1.5f);
+ // scale(1.5f);
   
   gm.display(100);
   fill(color(255));
@@ -464,7 +464,7 @@ void draw()
   pushMatrix();
   
   fill(color(10));
-  ellipse(0, 0, 200, 200);
+  ellipse(0, 0, 280, 280);
   popMatrix();
   
   // TEMP
@@ -490,7 +490,7 @@ void draw()
      pushMatrix();
      scale(.95f);
      rotate((i-2) * PI/6.0f - PI/12.0f);
-     translate(100, 0);
+     translate(135, 0);
      rotate(PI/2);
      translate(-10,0);
      
@@ -506,7 +506,7 @@ void draw()
     // ATMOSPHERE PPM
   
   pushMatrix();
-  displayAtmos(100);
+  displayAtmos(150);
   popMatrix();
   
   popMatrix();

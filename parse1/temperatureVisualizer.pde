@@ -54,19 +54,19 @@ public class TemperatureVisualizer extends AbstractVisualizer
       //colorMode(HSB);
       colorMode(RGB);
       fill(#f5a133);
-      arc(0, 0, d, d, i * 2*PI/12 - PI/2, (i+1) * 2*PI/12 - PI/2);
+      arc(0, 0, d*1.3f, d*1.3f, i * 2*PI/12 - PI/2, (i+1) * 2*PI/12 - PI/2);
      // noStroke();
        //colorMode(RGB);
       stroke(#e18c1c);
       
       strokeWeight(2);
       fill(255);
-      arc(0, 0, d2-val/2, d2-val/2, i * 2*PI/12 - PI/2 - radians(2), (i+1) * 2*PI/12 - PI/2 + radians(2));
+      arc(0, 0, d2*1.3f-val/2, d2*1.3f-val/2, i * 2*PI/12 - PI/2, (i+1) * 2*PI/12 - PI/2);
     }
     
     noStroke();
     fill(255);
-    ellipse(0, 0, 5, 5);
+    ellipse(0, 0, 7.5, 7.5);
   }
 
   public String getTitle() {
